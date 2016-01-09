@@ -21,6 +21,8 @@
 
 require __DIR__.'/../bootstrap/autoload.php';
 
+// phpinfo();exit;
+
 /*
 |--------------------------------------------------------------------------
 | Turn On The Lights
