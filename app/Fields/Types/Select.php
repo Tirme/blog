@@ -22,7 +22,7 @@ class Select extends Type
     }
     public function getFormHtml()
     {
-        return view('fields.types.select', [
+        return view('FieldsView::types.select', [
             'label' => $this->getFormLabel(),
             'name' => $this->_name,
             'selected_value' => $this->_value,

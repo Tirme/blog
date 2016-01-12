@@ -17,7 +17,7 @@ class PlanText extends Text
     }
     public function getFormHtml()
     {
-        return view('fields.types.plan_text', [
+        return view('FieldsView::types.plan_text', [
             'label' => $this->getFormLabel(),
             'name' => $this->_name,
             'value' => $this->_value,

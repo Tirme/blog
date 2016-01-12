@@ -15,4 +15,8 @@ class Mongo extends Eloquent
 
         return $this;
     }
+    public function getId()
+    {
+        return $this->_id;
+    }
 }

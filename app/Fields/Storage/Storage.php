@@ -20,28 +20,16 @@ class Storage
 
         return $collection;
     }
-    public function getList($per_page = 10)
+    public function getAll($search = [])
     {
-        $search = Request::query('search', '');
         $query = $this->_query;
+        $collection = collect();
         if (empty($search)) {
-            $pagination = $this->_query
-                ->paginate($per_page);
-            $pagination->hack_items = $pagination->getCollection();
+            $collection = $query->get();
         } else {
-            $pagination = $this->_query
-                ->where('name', 'like', '%'.$search.'%')
-                ->paginate($per_page);
-            $collection = $query
-                ->where('name', 'like', '%'.$search.'%')
-                ->skip(($pagination->currentPage() - 1) * $pagination->perPage())
-                ->take($pagination->perPage())
-                ->get();
-            $pagination->hack_items = $collection;
-            $pagination->appends(['search' => $search]);
-        }
 
-        return $pagination;
+        }
+        return $collection;
     }
     public function insert($data)
     {

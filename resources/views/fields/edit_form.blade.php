@@ -15,8 +15,8 @@
             </div>
         @endif
     @endforeach
-    <input type="hidden" name="hash" value="{{ $hash }}" />
+    <input type="hidden" name="_hash" value="{{ $hash }}" />
+    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
     <a href="{{ $links->cancel }}" class="btn btn-default">Cancel</a>
-    {{ csrf_field() }}
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

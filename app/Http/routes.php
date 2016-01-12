@@ -28,5 +28,22 @@ Route::group([
         'as' => 'model_update',
         'uses' => 'FieldController@update',
     ]);
+    Route::post('upload/photo', [
+        'as' => 'model_upload_photo',
+        'uses' => 'FieldController@uploadPhoto',
+    ]);
+    Route::group([
+        'prefix' => 'gallery',
+        'namespace' => 'Gallery',
+    ], function () {
+        Route::get('album/{album_id}/photo/list', [
+            'as' => 'gallery_album_photo_list',
+            'uses' => 'AlbumController@photoList',
+        ]);
+        Route::get('album/{album_id}/photo/upload', [
+            'as' => 'gllery_album_photo_upload',
+            'uses' => 'AlbumController@photoUploadForm',
+        ]);
+    });
     Route::get('test', 'FieldController@test');
 });

@@ -18,7 +18,7 @@ class Email extends Text
     }
     public function getFormHtml()
     {
-        return view('fields.types.email', [
+        return view('FieldsView::types.email', [
             'label' => $this->getFormLabel(),
             'name' => $this->_name,
             'value' => $this->_value,

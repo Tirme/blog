@@ -38,6 +38,21 @@ class Album extends Model
         $this->_setFormAttributes([
             'class' => 'AlbumForm',
         ]);
+        $this->_addListAction([
+            'class' => 'glyphicon glyphicon-picture',
+            'link' => route('gallery_album_photo_list', [
+                'album_id' => ':album_id'
+            ]),
+            'title' => 'Photos',
+        ]);
+    }
+    public function getAll()
+    {
+        $model_name = $this->getName();
+        $collection = Field::storage($model_name)
+                ->getAll();
+
+        return $collection;
     }
     protected function _onSave()
     {

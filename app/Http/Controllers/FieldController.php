@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Fields\User;
+use App\Http\Requests\Fields\UploadPhotoRequest;
 use Field;
 use Illuminate\Http\Request;
+use Eventviva\ImageResize;
 
 class FieldController extends Controller
 {
@@ -48,7 +50,7 @@ class FieldController extends Controller
     }
     public function store(Request $request)
     {
-        $hash = $request->get('hash', '');
+        $hash = $request->get('_hash', '');
         $params = Field::decryptHash($hash);
         if ($params !== false) {
             $model_name = $params['model_name'];
@@ -92,7 +94,7 @@ class FieldController extends Controller
     }
     public function update(Request $request)
     {
-        $hash = $request->get('hash', '');
+        $hash = $request->get('_hash', '');
         $params = Field::decryptHash($hash);
         if ($params !== false) {
             $model_name = $params['model_name'];
@@ -118,6 +120,43 @@ class FieldController extends Controller
             }
         } else {
             return redirect('/');
+        }
+    }
+    public function uploadPhoto(UploadPhotoRequest $request)
+    {
+        $result = [
+            'photos' => []
+        ];
+        $hash = $request->get('_hash', '');
+        $params = Field::decryptHash($hash);
+        if ($params !== false) {
+            $model_name = $params['model_name'];
+            $photos = $request->file('photo');
+            $temp_path = storage_path('fields/upload/photo/temp');
+            foreach ($photos as $photo) {
+                if ($photo->isValid()) {
+                    $photo_id = uniqid();
+                    $photo_path  =$photo->getPath().'/'.$photo->getFilename();
+                    $photo_data = file_get_contents($photo_path);
+                    $base64 = base64_encode($photo_data);
+                    $mine_type = mime_content_type($photo_path);
+                    $image = new ImageResize($photo_path);
+                    $image->resizeToBestFit(300, 225);
+                    // $image->resize(300, 225);
+                    // $image->scale(100);
+                    $base64 = base64_encode($image->getImageAsString());
+                    $photo->move($temp_path, $photo_id);
+                    $result['photos'][] = [
+                        'id' => $photo_id,
+                        'mine_type' => $mine_type,
+                        'base64' => $base64,
+                        // 'p' => $p
+                    ];
+                }
+            }
+            return response()->json($result);
+        } else {
+            // response hash error
         }
     }
 }

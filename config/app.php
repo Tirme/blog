@@ -156,8 +156,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         // Customize
-        App\Providers\FieldServiceProvider::class,
-        App\Providers\BladeServiceProvider::class,
+        App\Fields\Providers\FieldServiceProvider::class,
+        App\Fields\Providers\RepositoryFactoryServiceProvider::class,
+        App\Fields\Providers\BladeServiceProvider::class,
         Jenssegers\Mongodb\MongodbServiceProvider::class,
     ],
 
@@ -205,7 +206,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         // Customize
-        'Field' => App\Support\Facades\Field::class,
+        'Field' => App\Fields\Support\Facades\Field::class,
+        'RepositoryFactory' => App\Fields\Support\Facades\RepositoryFactory::class,
     ],
 
 ];

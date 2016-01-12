@@ -11,9 +11,7 @@ class Register
     {
         $this->_register(\App\Fields\Article::class, 'article');
         $this->_register(\App\Fields\Album::class, 'album');
-        // $this->_register(\App\Fields\Customer::class, 'customer');
-        // $this->_register(\App\Fields\PonPon::class, 'pon_pon');
-        // $this->_register(\App\Fields\Staff::class, 'staff');
+        $this->_register(\App\Fields\Photo::class, 'photo');
     }
     protected function _register($class, $alias)
     {
@@ -31,13 +29,15 @@ class Register
     {
         $models = [];
         foreach ($this->_models as $model_name => $model) {
-            $models[] = (object) [
-                'link' => route('model_list', [
-                    'model_name' => $model_name,
-                ]),
-                'name' => $model_name,
-                'text' => class_basename($model),
-            ];
+            if ($model::$_menu_available) {
+                $models[] = (object) [
+                    'link' => route('model_list', [
+                        'model_name' => $model_name,
+                    ]),
+                    'name' => $model_name,
+                    'text' => class_basename($model),
+                ];
+            }
         }
 
         return view('fields.menu', [

@@ -29,7 +29,7 @@ trait Form
         $hash = Field::cryptHash([
             'model_name' => $model_name,
         ]);
-        $form = view('fields.create_form', [
+        $form = view('FieldsView::create_form', [
             'attributes' => $this->_form_attributes,
             'rows' => $rows,
             'hash' => $hash,
@@ -63,7 +63,7 @@ trait Form
             '_id' => $this->_id,
             'model_name' => $model_name,
         ]);
-        $form = view('fields.edit_form', [
+        $form = view('FieldsView::edit_form', [
             'attributes' => $this->_form_attributes,
             'rows' => $rows,
             'hash' => $hash,

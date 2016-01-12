@@ -18,6 +18,7 @@ class Model
     protected $_values = [];
     protected $_extras = [];
     protected $_errors = null;
+    public static $_menu_available = true;
     public function __construct(array $data = [])
     {
         $this->_register();

@@ -18,7 +18,7 @@ class Date extends Text
     }
     public function getFormHtml()
     {
-        return view('fields.types.date', [
+        return view('FieldsView::types.date', [
             'label' => $this->getFormLabel(),
             'name' => $this->_name,
             'value' => $this->_value,

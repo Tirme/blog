@@ -24,7 +24,7 @@ class Radio extends Type
     }
     public function getFormHtml()
     {
-        return view('fields.types.radio', [
+        return view('FieldsView::types.radio', [
             'label' => $this->getFormLabel(),
             'name' => $this->_name,
             'value' => $this->_value,

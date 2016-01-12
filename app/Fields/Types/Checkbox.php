@@ -28,7 +28,7 @@ class Checkbox extends Type
     }
     public function getFormHtml()
     {
-        return view('fields.types.checkbox', [
+        return view('FieldsView::types.checkbox', [
             'label' => $this->getFormLabel(),
             'name' => $this->_name,
             'values' => is_array($this->_value) ? $this->_value : [],
