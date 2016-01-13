@@ -40,7 +40,7 @@ class Register
             }
         }
 
-        return view('fields.menu', [
+        return view('FieldsView::menu', [
             'models' => $models,
         ]);
     }

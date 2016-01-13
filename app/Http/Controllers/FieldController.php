@@ -133,6 +133,7 @@ class FieldController extends Controller
             $model_name = $params['model_name'];
             $photos = $request->file('photo');
             $temp_path = storage_path('fields/upload/photo/temp');
+            // https://github.com/Intervention/image
             foreach ($photos as $photo) {
                 if ($photo->isValid()) {
                     $photo_id = uniqid();

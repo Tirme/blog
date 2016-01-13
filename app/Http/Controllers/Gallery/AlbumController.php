@@ -12,7 +12,11 @@ class AlbumController extends Controller
     {
         $repository = RepositoryFactory::create('Gallery\Photo');
         $collection = $repository->getList();
-        return response()->json(['photos' => $collection]);
+        return view('admin', [
+            'menu' => Field::getMenu(),
+            'content' => view('photo.list')
+        ]);
+        // return response()->json(['photos' => $collection]);
     }
     public function photoUploadForm($album_id)
     {

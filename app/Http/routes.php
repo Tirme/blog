@@ -16,7 +16,7 @@ Route::group([
         'as' => 'model_create',
         'uses' => 'FieldController@create',
     ]);
-    Route::get('{model_name}/edit/{id}', [
+    Route::get('{model_name}/{id}/edit', [
         'as' => 'model_edit',
         'uses' => 'FieldController@edit',
     ]);
