@@ -33,6 +33,7 @@ class AlbumController extends Controller
             ]),
             'redirect' => [
                 'success' => route('gallery_album_photo_list', $album_id),
+                'error' => route('gallery_album_photo_form', $album_id),
             ],
             'hash' => Field::cryptHash([
                 'model_name' => 'photo',
@@ -43,6 +44,7 @@ class AlbumController extends Controller
             'menu' => Field::getMenu(),
             'content' => view('photo.form', [
                 'form' => $form,
+                'errors' => session('errors', []),
             ]),
         ]);
     }
@@ -54,7 +56,7 @@ class AlbumController extends Controller
             $image = Image
                 ::make($photo_file);
             $exif = $image->exif();
-            $font_path = app_path().'/monaco.ttf';
+            // $font_path = app_path().'/monaco.ttf';
             // $exif_image = Image::canvas(300, 20, '#000000');
             // $exif_image->text('Test', 0, 20, function($font) {
             //     $font->file(app_path().'/monaco.ttf');

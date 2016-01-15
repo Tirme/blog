@@ -22,7 +22,7 @@ class Article extends Model
 
                 return $options;
             },
-            'rules' => ['required', 'fields:topic'],
+            'rules' => ['required', 'field_ref:topic'],
         ]);
         $subject = Field::type('plan_text', [
             'label' => 'Subject',

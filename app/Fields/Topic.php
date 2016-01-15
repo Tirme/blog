@@ -12,10 +12,7 @@ class Topic extends Model
     {
         $name = Field::type('plan_text', [
             'label' => 'Name',
-//                    'default' => 'Peter',
             'placeholder' => 'Subject',
-            'listable' => true,
-            'editable' => false,
             'index' => true,
             'rules' => ['required'],
         ]);

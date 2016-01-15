@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class FieldServiceProvider extends ServiceProvider
 {
     public function boot() {
-        Validator::extend('Fields', 'App\Fields\Validators\FieldValidator@validateItemByModel');
+        Validator::extend('field_ref', 'App\Fields\Validators\FieldValidator@validateRef');
         // Validator::extend('foo', function($attribute, $value, $parameters, $validator) {
         //     return $value == 'foo';
         // });

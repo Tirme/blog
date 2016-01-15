@@ -96,7 +96,7 @@ trait Form
 
         return $rules;
     }
-    public function create($data)
+    public function store($data)
     {
         $result = false;
         $validator = Validator::make($data, $this->getRules());
@@ -111,8 +111,6 @@ trait Form
             }
             $repository = RepositoryFactory::create('Field\Field');
             $result = $repository->store($this->getName(), $values);
-            // $result = Field::storage($this->getName())
-                // ->insert($data);
         }
 
         return $result;

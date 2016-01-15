@@ -3,7 +3,6 @@
     type="file"
     accept="image/*"
     multiple
-    model_name="{{ $model_name }}"
     id="{{ $name }}"
     value="{{ $value }}"
     placeholder="{{ $placeholder }}"

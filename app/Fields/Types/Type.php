@@ -149,7 +149,7 @@ abstract class Type
     }
     public function __call($name, $arguments)
     {
-        $key = '_'.snake_case($name);
+        $key = snake_case($name);
         if (isset($this->$key)) {
             return $this->$key;
         } else {

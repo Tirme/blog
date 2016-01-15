@@ -6,5 +6,5 @@
     value="{{ $value }}"
     placeholder="{{ $placeholder }}"
     {{ $required }}
-    {{$editable}}
+    {{ $editable }}
 />

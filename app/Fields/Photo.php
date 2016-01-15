@@ -4,6 +4,7 @@ namespace App\Fields;
 
 use Field;
 use Validator;
+use RepositoryFactory;
 
 class Photo extends Model
 {
@@ -28,7 +29,8 @@ class Photo extends Model
         ]);
         $photos = Field::type('photos', [
             'label' => 'Upload Photos',
-            'column' => 'Photos'
+            'column' => 'Photos',
+            'rules' => ['required'],
         ]);
         $this->add('album_id', $album);
         $this->add('photos', $photos);
@@ -36,18 +38,18 @@ class Photo extends Model
             'class' => 'PhotoForm',
         ]);
     }
-    public function create($data)
+    public function store($data)
     {
         $result = false;
         $validator = Validator::make($data, $this->getRules());
         if ($validator->fails()) {
             $this->setErrors($validator->errors());
         } else {
-            $photos = $data['photo'];
+            $photos = isset($data['photos']) ? $data['photos'] : [];
             foreach ($photos as $photo) {
                 $photo['album_id'] = $data['album_id'];
-                Field::storage($this->getName())
-                    ->insert($photo);
+                $repository = RepositoryFactory::create('Field\Field');
+                $result = $repository->store($this->getName(), $photo);
             }
         }
 

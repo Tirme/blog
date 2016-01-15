@@ -37,8 +37,7 @@ class Field
         $models = self::getModels();
         if (isset($models[$model_name])) {
             $repository = RepositoryFactory::create('Field\Field');
-            $collection = $repository->get($model_name, $id);
-            $row = $collection->first();
+            $row = $repository->get($model_name, $id);
             if ($row) {
                 $model = new $models[$model_name]($row->toArray());
             }

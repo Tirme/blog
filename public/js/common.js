@@ -31,8 +31,8 @@
                     preview.append(
                         '<li>' +
                         '<img src="data:image/' + photo.mine_type + ';base64,' + photo.base64 + '" />' +
-                        '<input type="hidden" name="photo[' + index + '][id]" value="' + photo.id + '" />' +
-                        '<textarea name="photo[' + index + '][summary]"> </textarea>' +
+                        '<input type="hidden" name="photos[' + index + '][id]" value="' + photo.id + '" />' +
+                        '<textarea name="photos[' + index + '][summary]"> </textarea>' +
                         '</li>'
                     );
                 });

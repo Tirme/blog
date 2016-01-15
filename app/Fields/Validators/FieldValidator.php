@@ -2,13 +2,18 @@
 
 namespace App\Fields\Validators;
 
+use RepositoryFactory;
+
 class FieldValidator
 {
-    public function validateItemByModel($attribute, $item, $parameters, $validator)
+    public function validateRef($attribute, $id, $parameters, $validator)
     {
         $valid = false;
-        // tirme($item);
-        echo 'aa';
+        list($model_name) = $parameters;
+        $repository = RepositoryFactory::create('Field\Field');
+        if ($repository->has($model_name, $id)) {
+            $valid = true;
+        }
         return $valid;
     }
 }

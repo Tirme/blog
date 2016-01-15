@@ -11,11 +11,14 @@ class FieldRepository extends Repository
     {
         $query = with(new FieldModel())
             ->setCollection($model_name);
-        $collection = $query
+        $row = $query
             ->where('_id', $id)
-            ->get();
+            ->first();
 
-        return $collection;
+        return $row;
+    }
+    public function has ($model_name, $id) {
+        return static::get($model_name, $id) !== null;
     }
     public function getList($model_name, $search = '', $per_page = 20)
     {
