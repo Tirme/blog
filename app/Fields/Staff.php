@@ -6,7 +6,7 @@ use Field;
 
 class Staff extends Model
 {
-    protected function _register()
+    protected function register()
     {
         $name = Field::type('plan_text', [
             'label' => 'Custoemr Name',
@@ -38,10 +38,10 @@ class Staff extends Model
                 1 => '派遣',
             ],
         ]);
-        $this->_add('name', $name);
-        $this->_add('email', $email);
-        $this->_add('status', $status);
-        $this->_setFormAttributes([
+        $this->add('name', $name);
+        $this->add('email', $email);
+        $this->add('status', $status);
+        $this->setFormAttributes([
             'class' => 'CustomerForm',
         ]);
     }

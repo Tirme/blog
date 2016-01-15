@@ -160,6 +160,7 @@ return [
         App\Fields\Providers\RepositoryFactoryServiceProvider::class,
         App\Fields\Providers\BladeServiceProvider::class,
         Jenssegers\Mongodb\MongodbServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
     ],
 
     /*
@@ -208,6 +209,7 @@ return [
         // Customize
         'Field' => App\Fields\Support\Facades\Field::class,
         'RepositoryFactory' => App\Fields\Support\Facades\RepositoryFactory::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

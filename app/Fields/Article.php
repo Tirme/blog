@@ -6,13 +6,26 @@ use Field;
 
 class Article extends Model
 {
-    protected $_admin_name = 'Article Management';
-    protected $_admin_description = 'Blog article';
-    protected function _register()
+    protected $admin_name = 'Article Management';
+    protected $admin_description = 'Blog article';
+    protected function register()
     {
+        $topic = Field::type('select', [
+            'label' => 'Topic',
+            'options' => function () {
+                $options = [];
+                $model = Field::getModel('Topic');
+                $topics = $model->getAll();
+                foreach ($topics as $topic) {
+                    $options[$topic->getId()] = $topic->name;
+                }
+
+                return $options;
+            },
+            'rules' => ['required', 'fields:topic'],
+        ]);
         $subject = Field::type('plan_text', [
             'label' => 'Subject',
-//                    'default' => 'Peter',
             'placeholder' => 'Subject',
             'listable' => true,
             'editable' => false,
@@ -21,7 +34,6 @@ class Article extends Model
         ]);
         $content = Field::type('textarea', [
             'label' => 'Content',
-//                    'default' => 'Peter',
             'rows' => 10,
             'placeholder' => 'Content',
             'listable' => true,
@@ -36,14 +48,12 @@ class Article extends Model
                 1 => 'Not Available',
             ],
         ]);
-        $this->_add('subject', $subject);
-        $this->_add('content', $content);
-        $this->_add('available', $available);
-        $this->_setFormAttributes([
+        $this->add('topic', $topic);
+        $this->add('subject', $subject);
+        $this->add('content', $content);
+        $this->add('available', $available);
+        $this->setFormAttributes([
             'class' => 'ArticleForm',
         ]);
-    }
-    protected function _onSave()
-    {
     }
 }

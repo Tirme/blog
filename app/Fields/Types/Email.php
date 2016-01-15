@@ -8,10 +8,10 @@ class Email extends Text
     public function getContent()
     {
         $content = '';
-        if (is_callable($this->_getContent)) {
-            $content = call_user_func_array($this->_getContent, [$this->_value]);
+        if (is_callable($this->getContent)) {
+            $content = call_user_func_array($this->getContent, [$this->value]);
         } else {
-            $content = $this->_value;
+            $content = $this->value;
         }
 
         return $content;
@@ -20,9 +20,9 @@ class Email extends Text
     {
         return view('FieldsView::types.email', [
             'label' => $this->getFormLabel(),
-            'name' => $this->_name,
-            'value' => $this->_value,
-            'placeholder' => $this->_placeholder,
+            'name' => $this->name,
+            'value' => $this->value,
+            'placeholder' => $this->placeholder,
             'editable' => $this->mode() === 1 && !$this->editable() ? 'readonly=readonly' : '',
             'required' => $this->isRequired() ? 'required=required' : '',
         ])->render();

@@ -10,27 +10,27 @@ abstract class Type
     use Column;
     const CREATE_MODE = 0;
     const EIDT_MODE = 1;
-    protected $_mode = 0;
-    protected $_id = null;
-    protected $_label = 'New Label';
-    protected $_form_label = '';
-    protected $_list_label = '';
-    protected $_name = null;
-    protected $_default = null;
-    protected $_value = null;
-    protected $_listable = true;
-    protected $_sortable = false;
-    protected $_editable = true;
-    protected $_is_required = false;
-    protected $_is_index = false;
-    protected $_rules = [];
-    protected $_customize_rules = [];
-    protected $_getContent = null;
+    protected $mode = 0;
+    protected $id = null;
+    protected $label = 'New Label';
+    protected $form_label = '';
+    protected $list_label = '';
+    protected $name = null;
+    protected $default = null;
+    protected $value = null;
+    protected $listable = true;
+    protected $sortable = false;
+    protected $editable = true;
+    protected $is_required = false;
+    protected $is_index = false;
+    protected $rules = [];
+    protected $customize_rules = [];
+    protected $getContent = null;
     public function __construct($params)
     {
         foreach ($params as $name => $value) {
             $setter = 'set'.studly_case($name);
-            $property = '_'.snake_case($name);
+            $property = snake_case($name);
             if (method_exists($this, $setter)) {
                 $this->$setter($value);
             } elseif (property_exists($this, $property)) {
@@ -40,74 +40,74 @@ abstract class Type
     }
     public function setMode($mode)
     {
-        $this->_mode = $mode === self::CREATE_MODE ? self::CREATE_MODE : self::EIDT_MODE;
+        $this->mode = $mode === self::CREATE_MODE ? self::CREATE_MODE : self::EIDT_MODE;
     }
     public function isCreateMode()
     {
-        return $this->_mode === self::CREATE_MODE;
+        return $this->mode === self::CREATE_MODE;
     }
     public function isEditMode()
     {
-        return $this->_mode === self::EIDT_MODE;
+        return $this->mode === self::EIDT_MODE;
     }
     public function setName($name)
     {
-        if (empty($this->_name)) {
-            $this->_name = $name;
+        if (empty($this->name)) {
+            $this->name = $name;
         }
 
         return $this;
     }
     public function setValue($value)
     {
-        $this->_value = $value;
+        $this->value = $value;
 
         return $this;
     }
     public function setDefault($default)
     {
-        $this->_value = $default;
+        $this->value = $default;
 
         return $this;
     }
     public function setIndex($is_index = true)
     {
-        $this->_is_index = $is_index || false;
+        $this->is_index = $is_index || false;
 
         return $this;
     }
     public function setRequired($is_required = true)
     {
-        $this->_is_required = $is_required || false;
+        $this->is_required = $is_required || false;
 
         return $this;
     }
     public function setEditable($editable)
     {
-        $this->_editable = $editable !== false;
+        $this->editable = $editable !== false;
 
         return $this;
     }
     public function setRules(array $rules = [])
     {
-        $this->_rules = array_merge($this->_rules, $rules);
+        $this->rules = array_merge($this->rules, $rules);
     }
     public function setContent(Closure $closure)
     {
-        $this->_getContent = $closure;
+        $this->getContent = $closure;
     }
     public function isIndex()
     {
-        return $this->_is_index;
+        return $this->is_index;
     }
     public function isRequired()
     {
-        return in_array('required', $this->_rules);
+        return in_array('required', $this->rules);
     }
     public function isEditable($allow_empty = true)
     {
         $editable = !($this->isEditMode() && !$this->editable());
-        if (empty($this->_value)) {
+        if (empty($this->value)) {
             $editable = true;
         }
 
@@ -115,29 +115,29 @@ abstract class Type
     }
     public function getFormLabel()
     {
-        $label = $this->_label;
-        if (!empty($this->_form_label)) {
-            $label = $this->_form_label;
+        $label = $this->label;
+        if (!empty($this->form_label)) {
+            $label = $this->form_label;
         }
 
         return $label;
     }
     public function getListLabel()
     {
-        $label = $this->_label;
-        if (!empty($this->_list_label)) {
-            $label = $this->_list_label;
+        $label = $this->label;
+        if (!empty($this->list_label)) {
+            $label = $this->list_label;
         }
 
         return $label;
     }
     public function getRules()
     {
-        return $this->_rules;
+        return $this->rules;
     }
     public function __get($name)
     {
-        $key = '_'.$name;
+        $key = $name;
         $getter = 'get'.studly_case($name);
         if (method_exists($this, $getter)) {
             return $this->$getter();

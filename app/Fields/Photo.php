@@ -7,8 +7,8 @@ use Validator;
 
 class Photo extends Model
 {
-    public static $_menu_available = false;
-    protected function _register()
+    public static $menu_available = false;
+    protected function register()
     {
         $album = Field::type('select', [
             'label' => 'Album',
@@ -30,9 +30,9 @@ class Photo extends Model
             'label' => 'Upload Photos',
             'column' => 'Photos'
         ]);
-        $this->_add('album', $album);
-        $this->_add('photos', $photos);
-        $this->_setFormAttributes([
+        $this->add('album_id', $album);
+        $this->add('photos', $photos);
+        $this->setFormAttributes([
             'class' => 'PhotoForm',
         ]);
     }
@@ -41,11 +41,11 @@ class Photo extends Model
         $result = false;
         $validator = Validator::make($data, $this->getRules());
         if ($validator->fails()) {
-            $this->_setErrors($validator->errors());
+            $this->setErrors($validator->errors());
         } else {
             $photos = $data['photo'];
             foreach ($photos as $photo) {
-                $photo['album'] = $data['album'];
+                $photo['album_id'] = $data['album_id'];
                 Field::storage($this->getName())
                     ->insert($photo);
             }

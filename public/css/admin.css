@@ -49,3 +49,22 @@
     margin: 10px;
     resize: vertical;
 }
+.photo-list {
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.photo-list li {
+    width: 320px;
+    min-height: 245px;
+    text-align: center;
+    border: 1px solid #CCCCCC;
+    margin: 10px 10px 0 0;
+    float: left;
+    display: inline-block;
+}
+.photo-list img {
+    /*width: 100%;*/
+    margin: 10px;
+}

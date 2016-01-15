@@ -6,17 +6,15 @@ use Field;
 
 class Album extends Model
 {
-    protected $_admin_name = 'Album Management';
-    protected $_admin_description = '';
-    protected function _register()
+    protected $admin_name = 'Album Management';
+    protected $admin_description = '';
+    protected function register()
     {
         $name = Field::type('plan_text', [
             'label' => 'Album Name',
-//                    'default' => 'Peter',
             'placeholder' => 'Album Name',
             'column' => 'Name',
             'index' => true,
-//                    'required' => true,
             'rules' => ['required'],
         ]);
         $date = Field::type('date', [
@@ -32,29 +30,26 @@ class Album extends Model
                 1 => 'Not Available',
             ],
         ]);
-        $this->_add('name', $name);
-        $this->_add('date', $date);
-        $this->_add('available', $available);
-        $this->_setFormAttributes([
-            'class' => 'AlbumForm',
-        ]);
-        $this->_addListAction([
-            'class' => 'glyphicon glyphicon-picture',
-            'link' => route('gallery_album_photo_list', [
-                'album_id' => ':album_id'
-            ]),
-            'title' => 'Photos',
-        ]);
-    }
-    public function getAll()
-    {
-        $model_name = $this->getName();
-        $collection = Field::storage($model_name)
-                ->getAll();
-
-        return $collection;
-    }
-    protected function _onSave()
-    {
+        $this
+            ->add('name', $name)
+            ->add('date', $date)
+            ->add('available', $available)
+            ->setFormAttributes([
+                'class' => 'AlbumForm',
+            ])
+            ->addListAction([
+                'class' => 'glyphicon glyphicon-picture',
+                'link' => route('gallery_album_photo_list', [
+                    'album_id' => ':album_id',
+                ]),
+                'title' => 'Photos',
+            ])
+            ->addListAction([
+                'class' => 'glyphicon glyphicon-plus',
+                'link' => route('gallery_album_photo_form', [
+                    'album_id' => ':album_id',
+                ]),
+                'title' => 'Add Photo',
+            ]);
     }
 }

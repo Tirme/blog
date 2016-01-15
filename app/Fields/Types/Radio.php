@@ -12,11 +12,11 @@ class Radio extends Type
     public function getContent()
     {
         $content = '';
-        if (is_callable($this->_getContent)) {
-            $content = call_user_func_array($this->_getContent, [$this->_items, $this->_value]);
+        if (is_callable($this->getContent)) {
+            $content = call_user_func_array($this->getContent, [$this->items, $this->value]);
         } else {
-            if (isset($this->_items[$this->_value])) {
-                $content = $this->_items[$this->_value];
+            if (isset($this->items[$this->value])) {
+                $content = $this->items[$this->value];
             }
         }
 
@@ -26,10 +26,10 @@ class Radio extends Type
     {
         return view('FieldsView::types.radio', [
             'label' => $this->getFormLabel(),
-            'name' => $this->_name,
-            'value' => $this->_value,
-            'items' => $this->_items,
-            'vertical' => $this->_vertical,
+            'name' => $this->name,
+            'value' => $this->value,
+            'items' => $this->items,
+            'vertical' => $this->vertical,
         ])->render();
     }
 }

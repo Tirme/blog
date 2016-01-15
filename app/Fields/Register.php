@@ -6,30 +6,31 @@ use App\Fields\Exceptions\RegisterException as FieldRegisterException;
 
 class Register
 {
-    protected $_models = [];
+    protected $models = [];
     public function __construct()
     {
-        $this->_register(\App\Fields\Article::class, 'article');
-        $this->_register(\App\Fields\Album::class, 'album');
-        $this->_register(\App\Fields\Photo::class, 'photo');
+        $this->register(\App\Fields\Article::class, 'article');
+        $this->register(\App\Fields\Topic::class, 'topic');
+        $this->register(\App\Fields\Album::class, 'album');
+        $this->register(\App\Fields\Photo::class, 'photo');
     }
-    protected function _register($class, $alias)
+    protected function register($class, $alias)
     {
         if (class_exists($class)) {
-            $this->_models[$alias] = $class;
+            $this->models[$alias] = $class;
         } else {
             throw new FieldRegisterException(sprintf('Model[%s] not exists.', $class));
         }
     }
     public function getModels()
     {
-        return $this->_models;
+        return $this->models;
     }
     public function getMenu()
     {
         $models = [];
-        foreach ($this->_models as $model_name => $model) {
-            if ($model::$_menu_available) {
+        foreach ($this->models as $model_name => $model) {
+            if ($model::$menu_available) {
                 $models[] = (object) [
                     'link' => route('model_list', [
                         'model_name' => $model_name,

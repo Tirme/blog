@@ -4,10 +4,10 @@ namespace App\Fields\Types\Parameters;
 
 trait Items
 {
-    protected $_items = [];
+    protected $items = [];
     public function setItems(array $items)
     {
-        $this->_items = $items;
+        $this->items = $items;
 
         return $this;
     }

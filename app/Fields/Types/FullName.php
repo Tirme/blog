@@ -11,9 +11,9 @@ class FullName extends Text
     public function getFormHtml()
     {
         return view('FieldsView::types.full_name', [
-            'name' => $this->_name,
-            'value' => $this->_value,
-            'placeholder' => $this->_placeholder,
+            'name' => $this->name,
+            'value' => $this->value,
+            'placeholder' => $this->placeholder,
         ])->render();
     }
 }

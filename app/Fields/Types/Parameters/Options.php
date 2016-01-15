@@ -4,13 +4,13 @@ namespace App\Fields\Types\Parameters;
 
 trait Options
 {
-    protected $_options = [];
+    protected $options = [];
     public function setOptions($options)
     {
         if (is_array($options)) {
-            $this->_options = $options;
+            $this->options = $options;
         } elseif (is_callable($options)) {
-            $this->_options = $options();
+            $this->options = $options();
         }
 
         return $this;

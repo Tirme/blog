@@ -8,17 +8,17 @@ use App\Fields\Types\Parameters\Vertical;
 class Checkbox extends Type
 {
     use Vertical,
-            Items;
+        Items;
     public function getContent()
     {
         $content = [];
-        if (is_callable($this->_getContent)) {
-            $content = call_user_func_array($this->_getContent, [$this->_items, $this->_value]);
+        if (is_callable($this->getContent)) {
+            $content = call_user_func_array($this->getContent, [$this->items, $this->value]);
         } else {
-            if (is_array($this->_value)) {
-                foreach ($this->_value as $value) {
-                    if (isset($this->_items[$value])) {
-                        $content[] = $this->_items[$value];
+            if (is_array($this->value)) {
+                foreach ($this->value as $value) {
+                    if (isset($this->items[$value])) {
+                        $content[] = $this->items[$value];
                     }
                 }
             }
@@ -30,10 +30,10 @@ class Checkbox extends Type
     {
         return view('FieldsView::types.checkbox', [
             'label' => $this->getFormLabel(),
-            'name' => $this->_name,
-            'values' => is_array($this->_value) ? $this->_value : [],
-            'items' => $this->_items,
-            'vertical' => $this->_vertical,
+            'name' => $this->name,
+            'values' => is_array($this->value) ? $this->value : [],
+            'items' => $this->items,
+            'vertical' => $this->vertical,
         ])->render();
     }
 }

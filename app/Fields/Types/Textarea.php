@@ -10,22 +10,22 @@ class Textarea extends Text
     public function getContent()
     {
         $content = '';
-        if (is_callable($this->_getContent)) {
-            $content = call_user_func_array($this->_getContent, [$this->_value]);
+        if (is_callable($this->getContent)) {
+            $content = call_user_func_array($this->getContent, [$this->value]);
         } else {
-            $content = $this->_value;
+            $content = $this->value;
         }
 
-        return $this->_value;
+        return $this->value;
     }
     public function getFormHtml()
     {
         return view('FieldsView::types.textarea', [
             'label' => $this->getFormLabel(),
-            'name' => $this->_name,
-            'value' => $this->_value,
-            'rows' => $this->_rows,
-            'placeholder' => $this->_placeholder,
+            'name' => $this->name,
+            'value' => $this->value,
+            'rows' => $this->rows,
+            'placeholder' => $this->placeholder,
             'editable' => !$this->isEditable() ? 'readonly=readonly' : '',
             'required' => $this->isRequired() ? 'required=required' : '',
         ])->render();

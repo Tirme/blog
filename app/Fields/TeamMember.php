@@ -6,7 +6,7 @@ use Field;
 
 class TeamMember extends Model
 {
-    protected function _register()
+    protected function register()
     {
         $name = Field::type('plan_text', [
             'label' => 'Name',
@@ -43,11 +43,11 @@ class TeamMember extends Model
                 1 => 'Enabled',
             ],
         ]);
-        $this->_add('name', $name);
-        $this->_add('full_name', $full_name);
-        $this->_add('email', $email);
-        $this->_add('status', $status);
-        $this->_setFormAttributes([
+        $this->add('name', $name);
+        $this->add('full_name', $full_name);
+        $this->add('email', $email);
+        $this->add('status', $status);
+        $this->setFormAttributes([
             'class' => 'TemaMemberForm',
         ]);
     }

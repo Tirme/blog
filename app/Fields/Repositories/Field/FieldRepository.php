@@ -41,7 +41,10 @@ class FieldRepository extends Repository
 
         return $pagination;
     }
-    public function all($model_name)
+    public function getAll($model_name)
     {
+        $query = with(new FieldModel())
+            ->setCollection($model_name);
+        return $query->get();
     }
 }

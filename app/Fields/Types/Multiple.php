@@ -9,17 +9,17 @@ class Multiple extends Type
     {
         foreach ($fields as $field) {
             if (is_subclass_of($field, 'App\\Fields\\Types\\Type', false)) {
-                $this->_fields[] = $field;
+                $this->fields[] = $field;
             }
         }
     }
     public function getContent()
     {
         $content = '';
-        if (is_callable($this->_getContent)) {
-            $content = call_user_func_array($this->_getContent, [$this->_value]);
+        if (is_callable($this->getContent)) {
+            $content = call_user_func_array($this->getContent, [$this->value]);
         } else {
-            $content = $this->_value;
+            $content = $this->value;
         }
 
         return $content;
@@ -28,7 +28,7 @@ class Multiple extends Type
     {
         return view('FieldsView::types.multiple', [
             'label' => $this->getFormLabel(),
-            'fields' => $this->_fields
+            'fields' => $this->fields
         ])->render();
     }
 }

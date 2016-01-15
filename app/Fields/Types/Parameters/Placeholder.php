@@ -4,9 +4,9 @@ namespace App\Fields\Types\Parameters;
 
 trait Placeholder
 {
-    protected $_placeholder;
+    protected $placeholder;
     public function setPlaceholder($placeholder)
     {
-        $this->_placeholder = $placeholder;
+        $this->placeholder = $placeholder;
     }
 }

@@ -4,18 +4,18 @@ namespace App\Fields\Repositories;
 
 abstract class Repository implements RepositoryInterface
 {
-    protected $_result = null;
-    protected $_errors = null;
+    protected $result = null;
+    protected $errors = null;
     public function hasErrors()
     {
-        return $this->_errors !== null;
+        return $this->errors !== null;
     }
     public function getErrors()
     {
-        return $this->_errors;
+        return $this->errors;
     }
     public function getResult()
     {
-        return $this->_result;
+        return $this->result;
     }
 }

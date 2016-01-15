@@ -4,10 +4,10 @@ namespace App\Fields\Types\Parameters;
 
 trait Vertical
 {
-    protected $_vertical = false;
+    protected $vertical = false;
     public function setOptions($vertical)
     {
-        $this->_vertical = $vertical === true;
+        $this->vertical = $vertical === true;
 
         return $this;
     }

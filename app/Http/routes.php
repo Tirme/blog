@@ -40,9 +40,13 @@ Route::group([
             'as' => 'gallery_album_photo_list',
             'uses' => 'AlbumController@photoList',
         ]);
-        Route::get('album/{album_id}/photo/upload', [
-            'as' => 'gllery_album_photo_upload',
+        Route::get('album/{album_id}/photo/form', [
+            'as' => 'gallery_album_photo_form',
             'uses' => 'AlbumController@photoUploadForm',
+        ]);
+        Route::get('album/{album_id}/photo/{photo_id}', [
+            'as' => 'gallery_album_photo_display',
+            'uses' => 'AlbumController@photoDisplay'
         ]);
     });
     Route::get('test', 'FieldController@test');

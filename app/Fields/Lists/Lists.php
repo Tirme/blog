@@ -8,11 +8,11 @@ use Request;
 
 trait Lists
 {
-    protected $_list_actions = [];
+    protected $list_actions = [];
     public function getList($per_page = 10)
     {
         $columns = [];
-        foreach ($this->_fields as $key => $field) {
+        foreach ($this->fields as $key => $field) {
             if ($field->listable) {
                 $columns[$key] = $field->getListLabel();
             }
@@ -35,13 +35,12 @@ trait Lists
 
             return $row;
         });
-
         return view('FieldsView::list', [
             'admin_name' => $this->getAdminName(),
             'admin_description' => $this->getAdminDescription(),
             'model_name' => $model_name,
             'columns' => $columns,
-            'actions' => $this->_list_actions,
+            'actions' => $this->list_actions,
             'rows' => $rows,
             'pagination' => $pagination,
             'links' => (object) [
@@ -51,8 +50,9 @@ trait Lists
             ],
         ]);
     }
-    protected function _addListAction(array $params)
+    protected function addListAction(array $params)
     {
-        $this->_list_actions[] = $params;
+        $this->list_actions[] = $params;
+        return $this;
     }
 }

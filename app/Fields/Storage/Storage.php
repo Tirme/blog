@@ -6,15 +6,15 @@ use Request;
 
 class Storage
 {
-    protected $_driver = 'Mongo';
-    protected $_query = null;
+    protected $driver = 'Mongo';
+    protected $query = null;
     public function __construct($name)
     {
-        $this->_query = (new Mongo())->setCollection($name);
+        $this->query = (new Mongo())->setCollection($name);
     }
     public function get($id)
     {
-        $collection = $this->_query
+        $collection = $this->query
             ->where('_id', $id)
             ->get();
 
@@ -22,7 +22,7 @@ class Storage
     }
     public function getAll($search = [])
     {
-        $query = $this->_query;
+        $query = $this->query;
         $collection = collect();
         if (empty($search)) {
             $collection = $query->get();
@@ -34,15 +34,15 @@ class Storage
     public function insert($data)
     {
         foreach ($data as $key => $value) {
-            $this->_query->$key = $value;
+            $this->query->$key = $value;
         }
 
-        return $this->_query
+        return $this->query
             ->save();
     }
     public function update($id, $data)
     {
-        return $this->_query
+        return $this->query
             ->where('_id', $id)
             ->update($data);
     }

@@ -4,9 +4,9 @@ namespace App\Fields\Types\Parameters;
 
 trait Rows
 {
-    protected $_rows;
+    protected $rows;
     public function setRows($rows)
     {
-        $this->_rows = $rows;
+        $this->rows = $rows;
     }
 }

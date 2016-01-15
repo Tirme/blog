@@ -50,7 +50,9 @@ class FieldController extends Controller
     }
     public function store(Request $request)
     {
-        $hash = $request->get('_hash', '');
+        $hash = $request->input('_hash', '');
+        $success_redirect = $request->input('redirect.success', null);
+        $error_redirect = $request->input('redirect.error', null);
         $params = Field::decryptHash($hash);
         if ($params !== false) {
             $model_name = $params['model_name'];
@@ -58,17 +60,25 @@ class FieldController extends Controller
             if ($model !== null) {
                 $model->create($request->all());
                 if ($model->hasError()) {
-                    return redirect()
-                        ->route('model_create_form', [
-                            'model_name' => $model_name,
-                        ])
-                        ->with('errors', $model->getErrors()->getMessages())
-                        ->withInput();
+                    if ($error_redirect !== null) {
+                        return redirect($error_redirect);
+                    } else {
+                        return redirect()
+                            ->route('model_create', [
+                                'model_name' => $model_name,
+                            ])
+                            ->with('errors', $model->getErrors()->getMessages())
+                            ->withInput();
+                    }
                 } else {
-                    return redirect()
-                        ->route('model_list', [
-                            'model_name' => $model->getName(),
-                        ]);
+                    if ($success_redirect !== null) {
+                        return redirect($success_redirect);
+                    } else {
+                        return redirect()
+                            ->route('model_list', [
+                                'model_name' => $model->getName(),
+                            ]);
+                    }
                 }
             } else {
                 throw new FieldFormException('model not exists.');
@@ -105,7 +115,7 @@ class FieldController extends Controller
                 $model->update($user_values);
                 if ($model->hasError()) {
                     return redirect()
-                        ->route('model_edit_form', [
+                        ->route('model_edit', [
                             'model_name' => $model_name,
                             'id' => $id,
                         ])
@@ -125,7 +135,7 @@ class FieldController extends Controller
     public function uploadPhoto(UploadPhotoRequest $request)
     {
         $result = [
-            'photos' => []
+            'photos' => [],
         ];
         $hash = $request->get('_hash', '');
         $params = Field::decryptHash($hash);
@@ -137,7 +147,7 @@ class FieldController extends Controller
             foreach ($photos as $photo) {
                 if ($photo->isValid()) {
                     $photo_id = uniqid();
-                    $photo_path  =$photo->getPath().'/'.$photo->getFilename();
+                    $photo_path = $photo->getPath().'/'.$photo->getFilename();
                     $photo_data = file_get_contents($photo_path);
                     $base64 = base64_encode($photo_data);
                     $mine_type = mime_content_type($photo_path);
@@ -155,6 +165,7 @@ class FieldController extends Controller
                     ];
                 }
             }
+
             return response()->json($result);
         } else {
             // response hash error

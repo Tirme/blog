@@ -10,11 +10,11 @@ class Select extends Type
     public function getContent()
     {
         $content = [];
-        if (is_callable($this->_getContent)) {
-            $content = call_user_func_array($this->_getContent, [$this->_options, $this->_value]);
+        if (is_callable($this->getContent)) {
+            $content = call_user_func_array($this->getContent, [$this->options, $this->value]);
         } else {
-            if (isset($this->_options[$this->_value])) {
-                $content[] = $this->_options[$this->_value];
+            if (isset($this->options[$this->value])) {
+                $content[] = $this->options[$this->value];
             }
         }
 
@@ -24,9 +24,9 @@ class Select extends Type
     {
         return view('FieldsView::types.select', [
             'label' => $this->getFormLabel(),
-            'name' => $this->_name,
-            'selected_value' => $this->_value,
-            'options' => $this->_options,
+            'name' => $this->name,
+            'selected_value' => $this->value,
+            'options' => $this->options,
         ])->render();
     }
 }
