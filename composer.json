@@ -8,7 +8,7 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "jenssegers/mongodb": "^2.2",
-        "eventviva/php-image-resize": "1.5.*",
+        "predis/predis": "^1.0",
         "intervention/image": "^2.3"
     },
     "require-dev": {

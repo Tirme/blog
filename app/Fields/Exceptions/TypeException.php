@@ -2,6 +2,8 @@
 
 namespace App\Fields\Exceptions;
 
-class TypeException extends \Exception
+use Exception;
+
+class TypeException extends Exception
 {
 }

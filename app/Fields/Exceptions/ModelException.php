@@ -4,6 +4,6 @@ namespace App\Fields\Exceptions;
 
 use Exception;
 
-class RegisterException extends Exception
+class ModelException extends Exception
 {
 }

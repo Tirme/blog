@@ -4,7 +4,6 @@ namespace App\Fields\Repositories\Field;
 
 use App\Fields\Repositories\Repository;
 use App\Fields\Storage\FieldModel;
-use Request;
 
 class FieldRepository extends Repository
 {
@@ -45,6 +44,26 @@ class FieldRepository extends Repository
     {
         $query = with(new FieldModel())
             ->setCollection($model_name);
+
         return $query->get();
+    }
+    public function store($model_name, $data)
+    {
+        $query = with(new FieldModel())
+            ->setCollection($model_name);
+        foreach ($data as $key => $value) {
+            $query->$key = $value;
+        }
+
+        return $query->save();
+    }
+    public function update($model_name, $id, $data)
+    {
+        $query = with(new FieldModel())
+            ->setCollection($model_name);
+
+        return $query
+            ->where('_id', $id)
+            ->update($data);
     }
 }

@@ -4,15 +4,17 @@ namespace App\Fields\Form;
 
 use Validator;
 use Field;
+use RepositoryFactory;
 
 trait Form
 {
     protected $form_attributes = [
-        'class' => ''
+        'class' => '',
     ];
     protected function setFormAttributes(array $attributes)
     {
         $this->form_attributes = $attributes;
+
         return $this;
     }
     public function getCreateForm(array $user_values = [])
@@ -63,7 +65,7 @@ trait Form
         }
         $model_name = $this->getName();
         $hash = Field::cryptHash([
-            '_id' => $this->id,
+            '_id' => $this->_id,
             'model_name' => $model_name,
         ]);
         $form = view('FieldsView::edit_form', [
@@ -101,8 +103,16 @@ trait Form
         if ($validator->fails()) {
             $this->setErrors($validator->errors());
         } else {
-            $result = Field::storage($this->getName())
-                ->insert($data);
+            $values = [];
+            foreach ($this->fields as $name => $field) {
+                if (isset($data[$name])) {
+                    $values[$name] = $data[$name];
+                }
+            }
+            $repository = RepositoryFactory::create('Field\Field');
+            $result = $repository->store($this->getName(), $values);
+            // $result = Field::storage($this->getName())
+                // ->insert($data);
         }
 
         return $result;
@@ -120,8 +130,8 @@ trait Form
                     $values[$name] = $data[$name];
                 }
             }
-            $result = Field::storage($this->getName())
-                ->update($this->id, $values);
+            $repository = RepositoryFactory::create('Field\Field');
+            $result = $repository->update($this->getName(), $this->_id, $values);
         }
 
         return $result;

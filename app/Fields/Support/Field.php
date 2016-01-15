@@ -5,9 +5,11 @@ namespace App\Fields\Support;
 use App\Fields\Register as FieldRegister;
 use App\Fields\Storage\Storage as FieldStorage;
 use App\Fields\Labels\Label as FieldLabel;
-use App\Fields\Exceptions\TypeException as FieldTypeException;
-use Crypt;
+use App\Fields\Exceptions\ModelException as FieldTypeException;
+use App\Fields\Exceptions\TypeException as FieldModelException;
 use Illuminate\Contracts\Encryption\DecryptException;
+use Crypt;
+use RepositoryFactory;
 
 class Field
 {
@@ -22,6 +24,8 @@ class Field
         $models = self::getModels();
         if (isset($models[$model_name])) {
             $model = new $models[$model_name]($data);
+        } else {
+            throw new FieldModelException('Model[%s(%s)] not exists');
         }
 
         return $model;
@@ -29,10 +33,19 @@ class Field
     public function getModelById($name, $id)
     {
         $model = null;
-        $collection = self::storage($name)->get($id);
-        if (!$collection->isEmpty()) {
-            $data = $collection->first();
-            $model = self::getModel($name, $data->toArray());
+        $model_name = snake_case($name);
+        $models = self::getModels();
+        if (isset($models[$model_name])) {
+            $repository = RepositoryFactory::create('Field\Field');
+            $collection = $repository->get($model_name, $id);
+            $row = $collection->first();
+            if ($row) {
+                $model = new $models[$model_name]($row->toArray());
+            }
+        } else {
+            throw new FieldModelException(
+                sprintf('Model[%s] not exists', $model_name)
+            );
         }
 
         return $model;
@@ -74,7 +87,8 @@ class Field
             return false;
         }
     }
-    public function formatLink($link, array $params = []) {
+    public function formatLink($link, array $params = [])
+    {
         return strtr($link, $params);
     }
 }

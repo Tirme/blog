@@ -6,6 +6,7 @@ use App\Fields\User;
 use App\Http\Requests\Fields\UploadPhotoRequest;
 use Field;
 use Illuminate\Http\Request;
+use RepositoryFactory;
 use Eventviva\ImageResize;
 
 class FieldController extends Controller
@@ -89,6 +90,7 @@ class FieldController extends Controller
     }
     public function edit($model_name, $id)
     {
+        $model_name = snake_case($model_name);
         $model = Field::getModelById($model_name, $id);
         if ($model !== null) {
             $user_values = old();
@@ -111,6 +113,7 @@ class FieldController extends Controller
             $id = $params['_id'];
             $model = Field::getModelById($model_name, $id);
             if ($model !== null) {
+
                 $user_values = $request->all();
                 $model->update($user_values);
                 if ($model->hasError()) {
@@ -127,6 +130,10 @@ class FieldController extends Controller
                             'model_name' => $model_name,
                         ]);
                 }
+            } else {
+                return redirect()->route('model_list', [
+                    'model_name' => $model_name,
+                ]);
             }
         } else {
             return redirect('/');
