@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('FieldsView::layout')
 @section('menu')
     {!!$menu!!}
 @endsection

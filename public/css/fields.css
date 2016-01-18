@@ -1,26 +1,3 @@
-/* Bootstrap customize */
-
-.container-fluid {
-    padding-top: 20px;
-}
-.pagination {
-    margin: 0;
-}
-.panel-heading h4 {
-    margin: 0;
-    line-height: 34px;
-}
-.panel-heading .badge {
-    vertical-align: top;
-    margin: 5px 0 0 5px;
-    line-height: 1.6;
-}
-.btn-group > .btn + .dropdown-toggle {
-    padding: 6px 12px;
-}
-.radio-inline label span, .checkbox-inline label span {
-    font-weight: normal;
-}
 .table td.empty {
     text-align: center;
 }
@@ -53,7 +30,7 @@
     width: 100%;
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0 0 20px 0;
 }
 .photo-list li {
     width: 320px;
@@ -64,7 +41,32 @@
     float: left;
     display: inline-block;
 }
+.photo-list div {
+    height: 225px;
+}
 .photo-list img {
     /*width: 100%;*/
     margin: 10px;
+}
+.photo-list p {
+    min-height: 20px;
+}
+.markdown-editor .tab-content {
+    padding: 5px;
+    border: 1px solid #DDDDDD;
+    border-width: 0 1px 1px;
+    border-radius: 0 0 4px 4px;
+    position: relative;
+    top: -1px;
+}
+.markdown-editor .tab-content textarea {
+    border: 0;
+    box-shadow: none;
+}
+.markdown-editor .nav.nav-tabs {
+    margin: 0;
+}
+.markdown-editor .markdown-preview {
+    min-height: 212px;
+    padding: 6px 12px;
 }

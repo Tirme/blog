@@ -13,7 +13,7 @@ class FieldController extends Controller
     {
         $model = Field::getModel($model_name);
         if ($model !== null) {
-            return view('admin', [
+            return view('FieldsView::fields', [
                 'menu' => Field::getMenu(),
                 'content' => $model->getList($per_page),
             ]);
@@ -27,7 +27,7 @@ class FieldController extends Controller
         if ($model) {
             $user_values = old();
 
-            return view('admin', [
+            return view('FieldsView::fields', [
                 'menu' => Field::getMenu(),
                 'content' => $model->getCreateForm($user_values),
                 'errors' => session('errors', []),
@@ -84,7 +84,7 @@ class FieldController extends Controller
         if ($model !== null) {
             $user_values = old();
 
-            return view('admin', [
+            return view('FieldsView::fields', [
                 'content' => $model->getEditForm($user_values),
                 'menu' => Field::getMenu(),
                 'errors' => session('errors', []),

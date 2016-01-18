@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vue Test</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
+</head>
+
+<body>
+    <div id="test">
+        <div>{{ test_string }}</div>
+        <input v-model="test_string" />
+        <tabs>
+            <tab header="Editor">
+                Editor
+            </tab>
+            <tab header="Preview">
+                Preview
+            </tab>
+        </tabs>
+        <tabs>
+            <tab header="Editor2">
+                Editor2
+            </tab>
+            <tab header="Preview2">
+                Preview2
+            </tab>
+        </tabs>
+        <accordion :one-at-atime="checked">
+            <panel header="Panel #1" :is-open="true">
+                AAA
+            </panel>
+            <panel header="Panel #2">
+                BBB
+            </panel>
+            <panel header="Panel #3">
+                CCC
+            </panel>
+            <panel header="Panel #4">
+                DDD
+            </panel>
+        </accordion>
+        <div>{{ date }}</div>
+        <alert type="success">
+            <strong>Well Done!</strong>
+            You successfully read this important alert message.
+        </alert>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.14/vue.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vue-strap/1.0.3/vue-strap.js"></script>
+    <script type="text/javascript">
+        var alert = VueStrap.alert;
+        var datepicker = VueStrap.datepicker;
+        var tabset = VueStrap.tabset;
+        // var tabs = VueStrap.tabs;
+        console.log(VueStrap);
+        var tab = VueStrap.tab;
+        var accordion = VueStrap.accordion;
+        var panel = VueStrap.panel;
+        new Vue({
+            el: '#test',
+            data: {
+                test_string: '# hello',
+                //         date: '2016/01/16',
+            },
+            components: {
+                accordion: accordion,
+                panel: panel,
+                alert: alert,
+                tabs: tabset,
+                tab: tab
+            }
+        });
+    </script>
+</body>
+
+</html>

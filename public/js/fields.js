@@ -1,3 +1,6 @@
+var tabs = VueStrap.tabset;
+var tab = VueStrap.tab;
+
 (function($) {
     $(document).ready(function() {
         $.datepicker.formatDate('yy-mm-dd');

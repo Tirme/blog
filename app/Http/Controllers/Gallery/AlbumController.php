@@ -11,18 +11,28 @@ class AlbumController extends Controller
 {
     public function photoList($album_id)
     {
-        $repository = RepositoryFactory::create('Gallery\Photo');
-        $collection = $repository->getList($album_id);
+        $album = with(RepositoryFactory::create('Field\Field'))
+            ->get('album', $album_id);
+        if ($album === null) {
+            return redirect('/');
+        }
+        $photos = with(RepositoryFactory::create('Gallery\Photo'))
+            ->getList($album_id);
 
-        return view('admin', [
+        return view('FieldsView::fields', [
             'menu' => Field::getMenu(),
             'content' => view('photo.list', [
-                'photos' => $collection,
+                'album' => $album,
+                'photos' => $photos,
             ]),
         ]);
     }
     public function photoUploadForm($album_id)
     {
+        $album = with(RepositoryFactory::create('Field\Field'))->get('album', $album_id);
+        if ($album === null) {
+            return redirect('/');
+        }
         $form = (object) [
             'action' => route('model_store', [
                 'model_name' => 'photo',
@@ -40,7 +50,7 @@ class AlbumController extends Controller
             ]),
         ];
 
-        return view('admin', [
+        return view('FieldsView::fields', [
             'menu' => Field::getMenu(),
             'content' => view('photo.form', [
                 'form' => $form,
@@ -50,6 +60,11 @@ class AlbumController extends Controller
     }
     public function photoDisplay($album_id, $photo_id)
     {
+        $album = with(RepositoryFactory::create('Field\Field'))
+            ->get('album', $album_id);
+        if ($album === null) {
+            return redirect('/');
+        }
         $temp_path = storage_path('fields/upload/photo/temp');
         $photo_file = $temp_path.'/'.$photo_id;
         if (file_exists($photo_file)) {
@@ -65,7 +80,8 @@ class AlbumController extends Controller
             // });
             $image->resize(300, 200, function ($constraint) {
                 $constraint->aspectRatio();
-            })->resizeCanvas(300, 220, 'top')
+            })
+            // ->resizeCanvas(300, 220, 'top')
             // ->insert($exif_image, 'bottom')
             ;
 

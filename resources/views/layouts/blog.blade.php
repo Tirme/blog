@@ -2,8 +2,8 @@
 <html ng-app="AdminModel">
     <head>
         <base href="/" />
-        <title>GCR DataCenter</title>
-        @include('includes.head')
+        <title>Blog</title>
+        @include('includes.fields.head')
     </head>
     <body>
         <div class="container-fluid">
