@@ -1,8 +1,9 @@
 <?php
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [
+    'as' => 'home',
+    'uses' => 'IndexController@homePage',
+]);
 
 Route::group([
     'prefix' => 'admin',
@@ -34,7 +35,7 @@ Route::group([
     ]);
     Route::group([
         'prefix' => 'gallery',
-        'namespace' => 'Gallery',
+        'namespace' => 'Gallery\Admin',
     ], function () {
         Route::get('album/{album_id}/photo/list', [
             'as' => 'gallery_album_photo_list',
@@ -46,7 +47,19 @@ Route::group([
         ]);
         Route::get('album/{album_id}/photo/{photo_id}', [
             'as' => 'gallery_album_photo_display',
-            'uses' => 'AlbumController@photoDisplay'
+            'uses' => 'AlbumController@photoDisplay',
+        ]);
+        Route::get('photos/import/display/{folder_name}/{file_name}', [
+            'as' => 'gallery_album_photo_import_display',
+            'uses' => 'AlbumController@photoImportDisplay',
+        ]);
+        Route::get('photos/import/{folder_name}', [
+            'as' => 'gallery_album_photo_import_form',
+            'uses' => 'AlbumController@photoImportForm',
+        ]);
+        Route::post('photos/import', [
+            'as' => 'gallery_album_photo_import',
+            'uses' => 'AlbumController@photoImport',
         ]);
     });
     Route::get('test', 'FieldController@test');

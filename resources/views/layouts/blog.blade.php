@@ -3,7 +3,7 @@
     <head>
         <base href="/" />
         <title>Blog</title>
-        @include('includes.fields.head')
+        @include('includes.head')
     </head>
     <body>
         <div class="container-fluid">

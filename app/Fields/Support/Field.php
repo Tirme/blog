@@ -10,6 +10,7 @@ use App\Fields\Exceptions\TypeException as FieldModelException;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Crypt;
 use RepositoryFactory;
+use Closure;
 
 class Field
 {
@@ -86,8 +87,14 @@ class Field
             return false;
         }
     }
-    public function formatLink($link, array $params = [])
+    public function listLink($link, $row)
     {
-        return strtr($link, $params);
+        $result = '';
+        if (is_string($link)) {
+            $result = $link;
+        } else if (is_callable($link)) {
+            $result = $link($row);
+        }
+        return $result;
     }
 }

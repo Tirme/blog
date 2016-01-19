@@ -39,17 +39,31 @@ class Album extends Model
             ])
             ->addListAction([
                 'class' => 'glyphicon glyphicon-picture',
-                'link' => route('gallery_album_photo_list', [
-                    'album_id' => ':album_id',
-                ]),
+                'link' => function ($row) {
+                    return route('gallery_album_photo_list', [
+                        'album_id' => $row->_id,
+                    ]);
+                },
                 'title' => 'Photos',
             ])
             ->addListAction([
                 'class' => 'glyphicon glyphicon-plus',
-                'link' => route('gallery_album_photo_form', [
-                    'album_id' => ':album_id',
-                ]),
+                'link' => function ($row) {
+                    return route('gallery_album_photo_form', [
+                        'album_id' => $row->_id,
+                    ]);
+                },
                 'title' => 'Add Photo',
+            ])
+            ->addListAction([
+                'class' => 'glyphicon glyphicon-import',
+                'link' => function ($row) {
+                    $date = str_replace('-', '', $row->date->value);
+                    return route('gallery_album_photo_import_form', [
+                        'folder_name' => $date,
+                    ]);
+                },
+                'title' => 'Import Photo',
             ]);
     }
 }

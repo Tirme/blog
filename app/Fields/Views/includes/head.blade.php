@@ -6,3 +6,4 @@
 <link href="//code.jquery.com/ui/1.12.0-beta.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" media="all">
 <link href="/css/bootstrap.customize.css" rel="stylesheet" type="text/css" media="all">
 <link href="/css/fields.css" rel="stylesheet" type="text/css" media="all">
+<link href="/css/admin.css" rel="stylesheet" type="text/css" media="all">

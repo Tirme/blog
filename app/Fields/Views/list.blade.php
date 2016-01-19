@@ -66,11 +66,11 @@
                         @foreach ($columns as $key => $column)
                             <td>{!! $row->$key->getContent() !!}</td>
                         @endforeach
-                        <td>{{$row->created_at}}</td>
-                        <td>{{$row->updated_at}}</td>
+                        <td>{{ $row->created_at }}</td>
+                        <td>{{ $row->updated_at }}</td>
                         <td>
                             @foreach ($actions as $action)
-                                <a href="{{ Field::formatLink($action['link'], [':album_id' => $row->_id]) }}" title="{{ $action['title'] }}">
+                                <a href="{{ Field::listLink($action['link'], $row) }}" title="{{ $action['title'] }}">
                                     <span class="{{ $action['class'] }}"></span>
                                 </a>
                             @endforeach

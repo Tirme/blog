@@ -2,5 +2,6 @@
 /node_modules
 /bower_components
 /storage/*
+/public/build/*
 .env
 composer.lock

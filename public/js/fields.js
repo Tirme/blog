@@ -1,5 +1,6 @@
 var tabs = VueStrap.tabset;
 var tab = VueStrap.tab;
+var modal = VueStrap.modal;
 
 (function($) {
     $(document).ready(function() {
