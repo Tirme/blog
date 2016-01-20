@@ -1,16 +1,40 @@
-var elixir = require('laravel-elixir');
+var gulp = require('gulp');
+var concat = require('gulp-concat');
+var sass = require('gulp-sass');
+var del = require('del');
 
-/*
- |--------------------------------------------------------------------------
- | Elixir Asset Management
- |--------------------------------------------------------------------------
- |
- | Elixir provides a clean, fluent API for defining some basic Gulp tasks
- | for your Laravel application. By default, we are compiling the Sass
- | file for our application, as well as publishing vendor resources.
- |
- */
+var components = [
+    'jquery/dist/jquery.min.js',
+    'Materialize/dist/js/materialize.min.js',
+    'vue/dist/vue.min.js'
+];
 
-elixir(function(mix) {
-    mix.sass('app.scss');
+gulp.task('components', function() {
+    del(['public/builds/js/components.js']);
+    var sources = [];
+    for (var i in components) {
+        sources.push('bower_components/' + components[i]);
+    }
+    return gulp.src(sources)
+        .pipe(concat('components.js'))
+        .pipe(gulp.dest('public/builds/js'));
 });
+
+gulp.task('sass', function () {
+    gulp.src('resources/assets/sass/*.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('public/builds/css'));
+});
+
+gulp.task('fonts', function() {
+    var sources = [];
+    sources.push('bower_components/Materialize/dist/font/**');
+    gulp.src(sources)
+        .pipe(gulp.dest('public/builds/font'));
+});
+
+gulp.task('watch', function() {
+
+});
+
+gulp.task('default', ['watch', 'components', 'sass', 'fonts']);

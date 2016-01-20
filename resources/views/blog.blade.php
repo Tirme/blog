@@ -1,4 +1,4 @@
-@extends('layouts.blog')
+@extends('layouts.main')
 @section('content')
     @foreach($albums as $album)
         {{ $album->name }}

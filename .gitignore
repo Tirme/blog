@@ -2,7 +2,7 @@
 /node_modules
 /bower_components
 /storage/*
-/public/build/*
-/.sass_cache
+/public/builds/*
+/.sass-cache
 .env
 composer.lock
