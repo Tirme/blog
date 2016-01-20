@@ -3,5 +3,6 @@
 /bower_components
 /storage/*
 /public/build/*
+/.sass_cache
 .env
 composer.lock
