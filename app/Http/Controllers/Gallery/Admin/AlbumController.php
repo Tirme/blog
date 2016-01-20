@@ -17,14 +17,16 @@ class AlbumController extends Controller
         $album = with(RepositoryFactory::create('Field\Field'))
             ->get('album', $album_id);
         if ($album === null) {
-            return redirect('/');
+            return redirect()->route('model_list', [
+                'model_name' => 'album',
+            ]);
         }
         $photos = with(RepositoryFactory::create('Gallery\Photo'))
             ->getList($album_id);
 
         return view('FieldsView::fields', [
             'menu' => Field::getMenu(),
-            'content' => view('photo.list', [
+            'content' => view('gallery.photo.admin.list', [
                 'album' => $album,
                 'photos' => $photos,
             ]),
@@ -45,8 +47,8 @@ class AlbumController extends Controller
                 'label' => 'Upload Photos',
             ]),
             'redirect' => [
-                'success' => route('gallery_album_photo_list', $album_id),
-                'error' => route('gallery_album_photo_form', $album_id),
+                'success' => route('admin_gallery_album_photo_list', $album_id),
+                'error' => route('admin_gallery_album_photo_form', $album_id),
             ],
             'hash' => Field::cryptHash([
                 'model_name' => 'photo',
@@ -55,61 +57,68 @@ class AlbumController extends Controller
 
         return view('FieldsView::fields', [
             'menu' => Field::getMenu(),
-            'content' => view('photo.form', [
+            'content' => view('gallery.photo.admin.form', [
                 'form' => $form,
                 'errors' => session('errors', []),
             ]),
         ]);
     }
-    public function photoDisplay($album_id, $photo_id)
+    public function photoImportDisplay($folder_name, $file_name)
     {
-        $album = with(RepositoryFactory::create('Field\Field'))
-            ->get('album', $album_id);
-        if ($album === null) {
-            return redirect('/');
-        }
-        $temp_path = storage_path('fields/upload/photo/temp');
-        $photo_file = $temp_path.'/'.$photo_id;
+        $resize1 = 960;
+        $resize2 = 540;
+        $dir = storage_path('photos/'.$folder_name);
+        $cache_path = storage_path(
+            sprintf('photos/cache_%sx%s/%s', $resize1, $resize2, $folder_name)
+        );
+        $photo_file = $dir.'/'.$file_name;
         if (file_exists($photo_file)) {
-            $image = Image::make($photo_file);
-            $exif = $image->exif();
-            // $font_path = app_path().'/monaco.ttf';
-            // $exif_image = Image::canvas(300, 20, '#000000');
-            // $exif_image->text('Test', 0, 20, function($font) {
-            //     $font->file(app_path().'/monaco.ttf');
-            //     $font->color('#FFFFFF');
-            //     $font->size(18);
-            // });
-            $image->resize(300, 200, function ($constraint) {
-                $constraint->aspectRatio();
-            })
-            // ->resizeCanvas(300, 220, 'top')
-            // ->insert($exif_image, 'bottom')
+            $cache_file = $cache_path.'/'.$file_name;
+            if (file_exists($cache_file)) {
+                $image = Image::make($cache_file);
+            } else {
+                $image = Image::make($photo_file);
+                $mine_type = mime_content_type($photo_file);
+                if ($image->width() > $image->height()) {
+                    $resize_width = $resize1;
+                    $resize_height = $resize2;
+                } else {
+                    $resize_width = $resize2;
+                    $resize_height = $resize1;
+                }
+                $image->resize($resize_width, $resize_height, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                if (!is_dir($cache_path)) {
+                    if (mkdir($cache_path, 0777, true)) {
+                        $image->save($cache_path.'/'.$file_name);
+                    }
+                } else {
+                    $image->save($cache_path.'/'.$file_name);
+                }
+            }
+            $exif = Image::make($photo_file)->exif();
+            // dd($exif);
+            $exif_text = strtr('{Make} {Model} Aperture: {FNumber} Shutter: {ExposureTime}', [
+                '{Make}' => $exif['Make'],
+                '{Model}' => $exif['Model'],
+                '{FNumber}' => $exif['FNumber'],
+                '{ExposureTime}' => $exif['ExposureTime'],
+            ]);
+            $exif_image = Image::canvas($image->width(), 25, '#000000');
+            $exif_image->text($exif_text, 20, 20, function ($font) {
+                $font_file = resource_path('fonts').'/monaco.ttf';
+                $font->file($font_file);
+                $font->color('#FFFFFF');
+                $font->size(18);
+            });
+            $image->resizeCanvas($image->width(), $image->height() + $exif_image->height(), 'top')
+                ->insert($exif_image, 'bottom')
             ;
 
             return $image->response();
-        }
-    }
-    public function photoImportDisplay($folder_name, $file_name)
-    {
-        $dir = storage_path('photos/'.$folder_name);
-        $photo_file = $dir.'/'.$file_name;
-        if (file_exists($photo_file)) {
-            $image = Image::make($photo_file);
-            $mine_type = mime_content_type($photo_file);
-            if ($image->width() > $image->height()) {
-                $resize_width = 960;
-                $resize_height = 540;
-            } else {
-                $resize_width = 540;
-                $resize_height = 960;
-            }
-            $image->resize($resize_width, $resize_height, function ($constraint) {
-            $constraint->aspectRatio();
-        });
-
-            return $image->response();
         } else {
+            // no photo
         }
     }
     public function photoImportForm(Request $request, $folder_name)
@@ -167,9 +176,13 @@ class AlbumController extends Controller
                     'direction' => $direction,
                 ];
             }
+        } else {
+            return redirect()->route('model_list', [
+                'model_name' => 'album',
+            ]);
         }
         $form = (object) [
-            'action' => route('gallery_album_photo_import'),
+            'action' => route('admin_gallery_album_photo_import'),
             'album' => Field::type('select', [
                 'label' => 'Album',
                 'column' => 'Name',
@@ -189,7 +202,7 @@ class AlbumController extends Controller
 
         return view('FieldsView::fields', [
             'menu' => Field::getMenu(),
-            'content' => view('photo.import', [
+            'content' => view('gallery.photo.admin.import', [
                 'form' => $form,
                 'errors' => session('errors', []),
                 'folder_name' => $folder_name,

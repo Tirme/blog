@@ -1,5 +1,4 @@
 @define $id = uniqid()
-{{ $id }}
 <label class="control-label">{{ $label }}</label>
 <div id="markdown-{{ $id }}" class="markdown-editor">
     <tabs>

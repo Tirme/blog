@@ -27,7 +27,8 @@
     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
     <modal :show.sync="show_modal" title="Photo" effect="fade" width="990" class="vuestrap-bug-photo-import-modal">
         <div slot="modal-body" class="modal-body">
-            <img src="@{{ photo }}" class="center-block" />
+            <img src="@{{ photo }}" class="center-block" v-show="show_photo" v-on:load="photoLoaded"/>
+            <progressbar :now="100" v-show="show_progressbar" type="primary" striped label animated></progressbar>
         </div>
         <div slot="modal-footer" class="modal-footer">
             <button type="button" class="btn btn-default" @click='show_modal = false'>Close</button>
@@ -40,16 +41,24 @@
         data: {
             show_modal: false,
             photo: '',
-            large: true
+            show_photo: false,
+            show_progressbar: false
         },
         methods: {
             open: function(folder_name, $file_name) {
                 this.photo = '/admin/gallery/photos/import/display/' + folder_name + '/' + $file_name;
+                this.show_photo = false;
+                this.show_progressbar = true;
                 this.show_modal = true;
+            },
+            photoLoaded: function() {
+                this.show_photo = true;
+                this.show_progressbar = false;
             }
         },
         components: {
-            modal: modal
+            modal: modal,
+            progressbar: progressbar
         }
     });
 @endpush

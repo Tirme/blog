@@ -11,9 +11,19 @@ class PhotoRepository extends Repository
     {
         $model = new FieldModel();
         $model->setCollection('Photo');
-        $data = $model
+        $collection = $model
             ->where('album_id', $album_id)
             ->get();
-        return $data;
+
+        return $collection;
+    }
+    public function getAlbumCover($album_id)
+    {
+        $model = new FieldModel();
+        $model->setCollection('Photo');
+        $row = $model->where('album_id', $album_id)
+            ->take(1);
+
+        return $row;
     }
 }

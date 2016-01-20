@@ -4,6 +4,34 @@ Route::get('/', [
     'as' => 'home',
     'uses' => 'IndexController@homePage',
 ]);
+Route::group([
+    'prefix' => 'blog',
+    'middleware' => ['web'],
+    'namespace' => 'Blog',
+], function() {
+    Route::get('', [
+        'as' => 'blog_article_list',
+        'uses' => 'ArticleController@listPage'
+    ]);
+});
+Route::group([
+    'prefix' => 'gallery',
+    'middleware' => ['web'],
+    'namespace' => 'Gallery',
+], function() {
+    Route::get('', [
+        'as' => 'gallery_album_list',
+        'uses' => 'AlbumController@listPage'
+    ]);
+    Route::get('album/{album_id}/photo/list', [
+        'as' => 'gallery_album_photo_list',
+        'uses' => 'AlbumController@photoListPage',
+    ]);
+    Route::get('album/{album_id}/photo/{photo_id}', [
+        'as' => 'gallery_album_photo_display',
+        'uses' => 'PhotoController@display',
+    ]);
+});
 
 Route::group([
     'prefix' => 'admin',
@@ -38,27 +66,23 @@ Route::group([
         'namespace' => 'Gallery\Admin',
     ], function () {
         Route::get('album/{album_id}/photo/list', [
-            'as' => 'gallery_album_photo_list',
+            'as' => 'admin_gallery_album_photo_list',
             'uses' => 'AlbumController@photoList',
         ]);
         Route::get('album/{album_id}/photo/form', [
-            'as' => 'gallery_album_photo_form',
+            'as' => 'admin_gallery_album_photo_form',
             'uses' => 'AlbumController@photoUploadForm',
         ]);
-        Route::get('album/{album_id}/photo/{photo_id}', [
-            'as' => 'gallery_album_photo_display',
-            'uses' => 'AlbumController@photoDisplay',
-        ]);
         Route::get('photos/import/display/{folder_name}/{file_name}', [
-            'as' => 'gallery_album_photo_import_display',
+            'as' => 'admin_gallery_album_photo_import_display',
             'uses' => 'AlbumController@photoImportDisplay',
         ]);
         Route::get('photos/import/{folder_name}', [
-            'as' => 'gallery_album_photo_import_form',
+            'as' => 'admin_gallery_album_photo_import_form',
             'uses' => 'AlbumController@photoImportForm',
         ]);
         Route::post('photos/import', [
-            'as' => 'gallery_album_photo_import',
+            'as' => 'admin_gallery_album_photo_import',
             'uses' => 'AlbumController@photoImport',
         ]);
     });

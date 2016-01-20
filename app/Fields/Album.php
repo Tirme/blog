@@ -17,6 +17,14 @@ class Album extends Model
             'index' => true,
             'rules' => ['required'],
         ]);
+        $summary = Field::type('markdown', [
+            'label' => 'Summary',
+            'rows' => 10,
+            'placeholder' => 'Summary',
+            'listable' => true,
+            'index' => true,
+            'rules' => ['required'],
+        ]);
         $date = Field::type('date', [
             'label' => 'Date',
             'column' => 'Date',
@@ -32,6 +40,7 @@ class Album extends Model
         ]);
         $this
             ->add('name', $name)
+            ->add('summary', $summary)
             ->add('date', $date)
             ->add('available', $available)
             ->setFormAttributes([
@@ -40,7 +49,7 @@ class Album extends Model
             ->addListAction([
                 'class' => 'glyphicon glyphicon-picture',
                 'link' => function ($row) {
-                    return route('gallery_album_photo_list', [
+                    return route('admin_gallery_album_photo_list', [
                         'album_id' => $row->_id,
                     ]);
                 },
@@ -49,7 +58,7 @@ class Album extends Model
             ->addListAction([
                 'class' => 'glyphicon glyphicon-plus',
                 'link' => function ($row) {
-                    return route('gallery_album_photo_form', [
+                    return route('admin_gallery_album_photo_form', [
                         'album_id' => $row->_id,
                     ]);
                 },
@@ -59,7 +68,7 @@ class Album extends Model
                 'class' => 'glyphicon glyphicon-import',
                 'link' => function ($row) {
                     $date = str_replace('-', '', $row->date->value);
-                    return route('gallery_album_photo_import_form', [
+                    return route('admin_gallery_album_photo_import_form', [
                         'folder_name' => $date,
                     ]);
                 },

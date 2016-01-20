@@ -1,6 +1,7 @@
 var tabs = VueStrap.tabset;
 var tab = VueStrap.tab;
 var modal = VueStrap.modal;
+var progressbar = VueStrap.progressbar;
 
 (function($) {
     $(document).ready(function() {

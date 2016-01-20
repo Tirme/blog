@@ -7,31 +7,9 @@ use Field;
 use RepositoryFactory;
 use Intervention\Image\ImageManagerStatic as Image;
 
-class AlbumController extends Controller
+class PhotoController extends Controller
 {
-    public function listPage() {
-        $albums = with(RepositoryFactory::create('Gallery\Album'))
-            ->getRows(10);
-        return view('home', [
-            'albums' => $albums
-        ]);
-    }
-    public function photoListPage($album_id)
-    {
-        $album = with(RepositoryFactory::create('Field\Field'))
-            ->get('album', $album_id);
-        if ($album === null) {
-            return redirect('/');
-        }
-        $photos = with(RepositoryFactory::create('Gallery\Photo'))
-            ->getList($album_id);
-
-        return view('gallery.photo.list', [
-            'album' => $album,
-            'photos' => $photos,
-        ]);
-    }
-    public function photoDisplay($album_id, $photo_id)
+    public function display($album_id, $photo_id)
     {
         $album = with(RepositoryFactory::create('Field\Field'))
             ->get('album', $album_id);

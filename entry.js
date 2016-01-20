@@ -1,7 +1,7 @@
-//var Vue = require('vue');
-//var VueRouter = require('vue-router');
-var mytest = require('./resources/assets/js/test.js');
+var Vue = require('vue');
 
+//var VueRouter = require('vue-router');
 //Vue.use(VueRouter);
 
-mytest();
+var Material = require('vue-material');
+Material.regAll(Vue);

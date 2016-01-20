@@ -39,14 +39,6 @@ class Article extends Model
             'index' => true,
             'rules' => ['required'],
         ]);
-        $content2 = Field::type('markdown', [
-            'label' => 'Content',
-            'rows' => 10,
-            'placeholder' => 'Content',
-            'listable' => true,
-            'index' => true,
-            'rules' => ['required'],
-        ]);
         $available = Field::type('select', [
             'label' => 'Available',
             'options' => [
@@ -57,7 +49,6 @@ class Article extends Model
         $this->add('topic', $topic);
         $this->add('subject', $subject);
         $this->add('content', $content);
-        $this->add('content2', $content2);
         $this->add('available', $available);
         $this->setFormAttributes([
             'class' => 'ArticleForm',

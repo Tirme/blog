@@ -1,5 +1,5 @@
 <div>
-    <a href="{{ route('gallery_album_photo_form', [
+    <a href="{{ route('admin_gallery_album_photo_form', [
         'album_id' => $album->id
     ]) }}">
         <span class="glyphicon glyphicon-plus"></span>

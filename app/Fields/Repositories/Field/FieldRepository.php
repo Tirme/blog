@@ -17,7 +17,8 @@ class FieldRepository extends Repository
 
         return $row;
     }
-    public function has ($model_name, $id) {
+    public function has($model_name, $id)
+    {
         return static::get($model_name, $id) !== null;
     }
     public function getList($model_name, $search = '', $per_page = 20)
@@ -42,6 +43,19 @@ class FieldRepository extends Repository
         }
 
         return $pagination;
+    }
+    public function getRows($model_name, $take = 10, $search = '')
+    {
+        $query = with(new FieldModel())
+            ->setCollection($model_name);
+        if (!empty($search)) {
+            $query->where('name', 'like', '%'.$search.'%');
+        }
+        $rows = $query->skip(0)
+            ->take($take)
+            ->get();
+
+        return $rows;
     }
     public function getAll($model_name)
     {

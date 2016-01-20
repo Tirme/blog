@@ -1,7 +1,6 @@
 @extends('layouts.blog')
-@section('menu')
-
-@endsection
 @section('content')
-    
+    @foreach($albums as $album)
+        {{ $album->name }}
+    @endforeach
 @endsection

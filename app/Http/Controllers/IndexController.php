@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use RepositoryFactory;
+
 class IndexController extends Controller
 {
     public function homePage()
     {
-        return view('blog');
+        $albums = with(RepositoryFactory::create('Gallery\Album'))
+            ->getRows(10);
+        return view('home', [
+            'albums' => $albums
+        ]);
     }
 }
