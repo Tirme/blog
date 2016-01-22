@@ -210,6 +210,7 @@ return [
         'Field' => App\Fields\Support\Facades\Field::class,
         'RepositoryFactory' => App\Fields\Support\Facades\RepositoryFactory::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Exif' => App\Support\Facades\Exif::class,
     ],
 
 ];

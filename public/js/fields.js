@@ -37,6 +37,7 @@ var progressbar = VueStrap.progressbar;
                         '<li>' +
                         '<img src="data:image/' + photo.mine_type + ';base64,' + photo.base64 + '" />' +
                         '<input type="hidden" name="photos[' + index + '][id]" value="' + photo.id + '" />' +
+                        '<input type="hidden" name="photos[' + index + '][file_name]" value="' + photo.file_name + '" />' +
                         '<textarea name="photos[' + index + '][summary]"> </textarea>' +
                         '</li>'
                     );

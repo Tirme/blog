@@ -154,6 +154,7 @@ class FieldController extends Controller
                         'id' => $photo_id,
                         'mine_type' => $mine_type,
                         'base64' => $base64,
+                        'file_name' => $photo->getClientOriginalName()
                     ];
                 }
             }

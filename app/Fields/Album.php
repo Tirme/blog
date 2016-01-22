@@ -19,9 +19,12 @@ class Album extends Model
         ]);
         $summary = Field::type('markdown', [
             'label' => 'Summary',
+            'list_content' => function ($content) {
+                return mb_substr($content, 0, 10);
+            },
             'rows' => 10,
             'placeholder' => 'Summary',
-            'listable' => true,
+            'listable' => false,
             'index' => true,
             'rules' => ['required'],
         ]);
@@ -67,9 +70,8 @@ class Album extends Model
             ->addListAction([
                 'class' => 'glyphicon glyphicon-import',
                 'link' => function ($row) {
-                    $date = str_replace('-', '', $row->date->value);
                     return route('admin_gallery_album_photo_import_form', [
-                        'folder_name' => $date,
+                        'date' => $row->date->value,
                     ]);
                 },
                 'title' => 'Import Photo',

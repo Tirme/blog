@@ -9,7 +9,8 @@
     <div class="footer-copyright">
         <div class="container">
             <span>© 2016 Peter Tsai & Hibiki Huang, All rights reserved.</span>
-            <a class="grey-text text-lighten-4 right" href="https://github.com/tirme/blog">MIT License</a>
+            {{-- <a class="grey-text text-lighten-4 right" href="https://github.com/tirme/blog">MIT License</a> --}}
+            <a href="/admin/album/list" target="_blank" class="grey-text text-lighten-4 right">管理</a>
         </div>
     </div>
 </footer>

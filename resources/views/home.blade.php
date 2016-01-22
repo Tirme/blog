@@ -3,7 +3,7 @@
     <div class="row">
         @foreach($albums as $album)
             <div class="col s12 m4">
-                <div class="card small hoverable">
+                <div class="card medium hoverable">
                     <div class="card-image">
                         <a
                             href="{{ route('gallery_album_photo_list', [
@@ -11,7 +11,11 @@
                             ]) }}"
                         >
                             @if ($album->cover)
-                                <img src="/gallery/album/{{ $album->getId() }}/photo/{{ $album->cover->id }}">
+                                <img src="{{ route('gallery_album_photo_display', [
+                                    'album_id' => $album->getId(),
+                                    'photo_id' => $album->cover->getId(),
+                                    'size' => 'small'
+                                ]) }}">
                             @endif
                             <span class="card-title">{{ $album->name }}</span>
                         </a>

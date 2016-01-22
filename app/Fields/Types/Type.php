@@ -25,7 +25,7 @@ abstract class Type
     protected $is_index = false;
     protected $rules = [];
     protected $customize_rules = [];
-    protected $getContent = null;
+    protected $list_content = null;
     public function __construct($params)
     {
         foreach ($params as $name => $value) {

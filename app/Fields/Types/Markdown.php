@@ -10,13 +10,13 @@ class Markdown extends Text
     public function getContent()
     {
         $content = '';
-        if (is_callable($this->getContent)) {
-            $content = call_user_func_array($this->getContent, [$this->value]);
+        if (is_callable($this->list_content)) {
+            $content = call_user_func_array($this->list_content, [$this->value]);
         } else {
             $content = $this->value;
         }
 
-        return $this->value;
+        return $content;
     }
     public function getFormHtml()
     {

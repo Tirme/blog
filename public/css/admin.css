@@ -1,5 +1,5 @@
 .vuestrap-bug-photo-import-modal .modal-dialog {
-    width: 990px;
+    width: 99%;
 }
 .photo-list {
     width: 100%;
@@ -8,19 +8,20 @@
     padding: 0 0 20px 0;
 }
 .photo-list li {
-    width: 320px;
+    width: 360px;
     min-height: 245px;
     text-align: center;
     border: 1px solid #CCCCCC;
     margin: 10px 10px 0 0;
+    padding: 10px;
     float: left;
     display: inline-block;
 }
-.photo-list div {
-    height: 225px;
+.photo-list div textarea {
+    height: 100px;
 }
 .photo-list img {
-    /*width: 100%;*/
+    width: 100%;
     margin: 10px;
 }
 .photo-list p {
@@ -36,7 +37,7 @@
     padding: 0;
 }
 .photos-import ul.photos li {
-    width: 320px;
+    width: 360px;
     text-align: center;
     border: 1px solid #CCCCCC;
     margin: 10px 10px 0 0;
@@ -44,19 +45,23 @@
     display: inline-block;
 }
 .photos-import ul.photos li > div {
-    height: 320px;
+    height: 265px;
     margin: 10px;
+    overflow: hidden;
 }
 .photos-import ul.photos li > div.horizontal img {
     margin: 65px 0;
 }
 .photos-import ul.photos li > div > div {
-    text-align: right;
-    padding: 5px;
+    text-align: center;
+    padding: 10px;
     position: relative;
 }
+.photos-import ul.photos li > div > div label {
+    font-size: 16px;
+}
 .photos-import ul.photos li img {
-    /*width: 100%;*/
+    width: 320px;
 
 }
 .photos-import ul.photos li textarea {
