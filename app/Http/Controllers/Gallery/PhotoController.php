@@ -6,13 +6,19 @@ use App\Http\Controllers\Controller;
 use RepositoryFactory;
 use Intervention\Image\ImageManagerStatic as Image;
 use Imagick;
-use Exif;
 
 class PhotoController extends Controller
 {
     public function test()
     {
+        $items = [];
+        for ($i = 100; $i < 200; ++$i) {
+            $items[] = ['id' => $i];
+        }
 
+        return view('gallery.photo.test', [
+            'items' => $items,
+        ]);
     }
     public function testARW()
     {

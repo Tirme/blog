@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Gallery\Admin;
 
 use App\Http\Controllers\Controller;
-use Field;
+use Podm;
 use RepositoryFactory;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Http\Request;
@@ -23,15 +23,15 @@ class AlbumController extends Controller
         $albums = with(RepositoryFactory::create('Gallery\Album'))
             ->getAll();
         $photos = with(RepositoryFactory::create('Gallery\Photo'))
-            ->getList($album_id, 12);
+            ->getList($album_id, 12); // @todo 沒做分頁
         $form = (object) [
             'action' => route('admin_gallery_album_photo_list_update', [
                 'album_id' => $album_id,
             ]),
         ];
         // @todo 只留一層view
-        return view('FieldsView::fields', [
-            'menu' => Field::getMenu(),
+        return view('PodmView::admin', [
+            'menu' => Podm::getMenu(),
             'content' => view('gallery.photo.admin.list', [
                 'album' => $album,
                 'albums' => $albums,
@@ -148,7 +148,7 @@ class AlbumController extends Controller
         $photos = $repository->queryForImport($date, 48);
         $form = (object) [
             'action' => route('admin_gallery_album_photo_import'),
-            'album' => Field::type('select', [
+            'album' => Podm::type('select', [
                 'label' => '選擇相簿',
                 'column' => 'Name',
                 'name' => 'album_id',
@@ -166,8 +166,8 @@ class AlbumController extends Controller
             ]),
         ];
         // @todo 調整成只做一層view
-        return view('FieldsView::fields', [
-            'menu' => Field::getMenu(),
+        return view('PodmView::admin', [
+            'menu' => Podm::getMenu(),
             'content' => view('gallery.photo.admin.import', [
                 'form' => $form,
                 'errors' => session('errors', null),

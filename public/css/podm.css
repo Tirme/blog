@@ -1,0 +1,47 @@
+.table td.empty {
+    text-align: center;
+}
+.photos-form {
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.photos-form li {
+    width: 320px;
+    min-height: 245px;
+    text-align: center;
+    border: 1px solid #CCCCCC;
+    margin: 10px 10px 0 0;
+    float: left;
+    display: inline-block;
+}
+.photos-form img {
+    /*width: 100%;*/
+    margin: 10px;
+}
+.photos-form textarea {
+    width: 300px;
+    height: 50px;
+    margin: 10px;
+    resize: vertical;
+}
+.markdown-editor .tab-content {
+    padding: 5px;
+    border: 1px solid #DDDDDD;
+    border-width: 0 1px 1px;
+    border-radius: 0 0 4px 4px;
+    position: relative;
+    top: -1px;
+}
+.markdown-editor .tab-content textarea {
+    border: 0;
+    box-shadow: none;
+}
+.markdown-editor .nav.nav-tabs {
+    margin: 0;
+}
+.markdown-editor .markdown-preview {
+    min-height: 212px;
+    padding: 6px 12px;
+}

@@ -15,14 +15,14 @@ class PhotoImportRequest extends Request
         return [
             'album_id' => [
                 'required',
-                'field_ref:album'
+                'podm_ref:album'
             ],
         ];
     }
     public function messages()
     {
         return [
-            'album_id.field_ref' => '請選擇相簿',
+            'album_id.podm_ref' => '請選擇相簿',
         ];
     }
 }

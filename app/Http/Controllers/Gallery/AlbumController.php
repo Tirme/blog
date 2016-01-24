@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Gallery;
 
 use App\Http\Controllers\Controller;
-use Field;
+use Podm;
 use RepositoryFactory;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -18,14 +18,21 @@ class AlbumController extends Controller
     }
     public function photoListPage($album_id)
     {
-        $album = with(RepositoryFactory::create('Field\Field'))
-            ->get('album', $album_id);
+        $album = with(RepositoryFactory::create('Gallery\Album'))
+            ->get($album_id);
         if ($album === null) {
             return redirect('/');
         }
-        $photos = with(RepositoryFactory::create('Gallery\Photo'))
-            ->getList($album_id);
-
+        $collection = with(RepositoryFactory::create('Gallery\Photo'))
+            ->getAll($album_id);
+        $photos = $collection->each(function($item) {
+            $item->src = route('gallery_album_photo_display', [
+                'album_id' => $item->album_id,
+                'photo_id' => $item->id,
+                'size' => 'large'
+            ]);
+            return $item;
+        });
         return view('gallery.photo.list', [
             'album' => $album,
             'photos' => $photos,

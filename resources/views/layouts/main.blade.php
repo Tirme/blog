@@ -19,7 +19,7 @@
         <div class="divider"></div>
         <div class="section">
             @yield('content')
-        </didv>
+        </did>
         @include('includes.main.footer')
         @include('includes.foot')
     </body>

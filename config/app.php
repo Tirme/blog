@@ -156,9 +156,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         // Customize
-        App\Fields\Providers\FieldServiceProvider::class,
-        App\Fields\Providers\RepositoryFactoryServiceProvider::class,
-        App\Fields\Providers\BladeServiceProvider::class,
+        App\Podm\Providers\PodmServiceProvider::class,
+        App\Podm\Providers\RepositoryFactoryServiceProvider::class,
+        App\Podm\Providers\BladeServiceProvider::class,
         Jenssegers\Mongodb\MongodbServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
     ],
@@ -207,8 +207,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         // Customize
-        'Field' => App\Fields\Support\Facades\Field::class,
-        'RepositoryFactory' => App\Fields\Support\Facades\RepositoryFactory::class,
+        'Podm' => App\Podm\Support\Facades\Podm::class,
+        'RepositoryFactory' => App\Podm\Support\Facades\RepositoryFactory::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Exif' => App\Support\Facades\Exif::class,
     ],

@@ -36,6 +36,7 @@
     </ul>
     <hr />
     <div class="clearfix">
+        {{ $photos->render() }}
         <button type="submit" class="btn btn-primary pull-right">Save</button>
     </div>
     <input name="_method" type="hidden" value="PUT" />
