@@ -21,7 +21,7 @@ class PodmRepository extends Repository
     {
         return static::get($model_name, $id) !== null;
     }
-    public function getList($model_name, $search = '', $per_page = 20)
+    public function getList($model_name, $search = '', $per_page = 10)
     {
         $query = with(new PodmEloquent())
             ->setCollection($model_name);

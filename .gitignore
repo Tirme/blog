@@ -3,6 +3,8 @@
 /bower_components
 /storage/*
 /public/builds/*
+/nbproject
 /.sass-cache
 .env
 composer.lock
+.php_cs.cache

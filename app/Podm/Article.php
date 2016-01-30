@@ -46,12 +46,12 @@ class Article extends Model
                 1 => 'Not Available',
             ],
         ]);
-        $this->add('topic', $topic);
-        $this->add('subject', $subject);
-        $this->add('content', $content);
-        $this->add('available', $available);
-        $this->setFormAttributes([
-            'class' => 'ArticleForm',
-        ]);
+        $this->add('topic', $topic)
+            ->add('subject', $subject)
+            ->add('content', $content)
+            ->add('available', $available)
+            ->setFormAttributes([
+                'class' => 'ArticleForm',
+            ]);
     }
 }

@@ -19,7 +19,7 @@
         </tab>
     </tabs>
 </div>
-@push('fields-scripts')
+@push('podm-scripts')
     new Vue({
         el: '#markdown-{{ $id }}',
         data: {

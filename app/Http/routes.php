@@ -12,10 +12,13 @@
 7. 調整相簿上傳相片的功能，與匯入架構一致 [3]
 8. 調整相片Exif的顯示位置與顯示方式 [2]
 9. 頁首頁尾的文字更新、頁尾的相關連結更新 [2]
-10. 登入管理權限 [1]
-11. 會員登入，角色 [3]
+11. 會員角色 [3]
 12. 相簿、文章觀看權限(依角色) [3]
 13. 照片捲動載入時，照片部分加入讀取中提示 [1]
+14. 管理介面預設網址[2]
+
+@todo
+model註冊改在config, 實際註冊時改讀config [1]
 
 @bugs
 
@@ -66,32 +69,8 @@ Route::group([
 
 Route::group([
     'prefix' => 'admin',
-    'middleware' => ['web'],
+    'middleware' => ['web', 'admin'],
 ], function () {
-    Route::get('{model_name}/list', [
-        'as' => 'model_list',
-        'uses' => 'PodmController@listPage',
-    ]);
-    Route::get('{model_name}/create', [
-        'as' => 'model_create',
-        'uses' => 'PodmController@create',
-    ]);
-    Route::get('{model_name}/{id}/edit', [
-        'as' => 'model_edit',
-        'uses' => 'PodmController@edit',
-    ]);
-    Route::post('{model_name}/store', [
-        'as' => 'model_store',
-        'uses' => 'PodmController@store',
-    ]);
-    Route::post('{model_name}/update', [
-        'as' => 'model_update',
-        'uses' => 'PodmController@update',
-    ]);
-    Route::post('upload/photo', [
-        'as' => 'model_upload_photo',
-        'uses' => 'PodmController@uploadPhoto',
-    ]);
     Route::group([
         'prefix' => 'gallery',
         'namespace' => 'Gallery\Admin',
@@ -125,5 +104,4 @@ Route::group([
             'uses' => 'AlbumController@photoImport',
         ]);
     });
-    Route::get('test', 'PodmController@test');
 });

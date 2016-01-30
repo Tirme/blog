@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Podm\Lists;
+namespace App\Podm\Traits;
 
 use Podm;
 use RepositoryFactory;
 use Request;
 
-trait Lists
+trait TraitList
 {
     protected $list_actions = [];
-    public function getList($per_page = 10)
+    public function getListHtml($per_page = 10)
     {
         $columns = [];
         foreach ($this->fields as $key => $field) {
@@ -35,7 +35,8 @@ trait Lists
 
             return $row;
         });
-        return view('PodmView::list', [
+
+        return view('PodmView::model.list', [
             'admin_name' => $this->getAdminName(),
             'admin_description' => $this->getAdminDescription(),
             'model_name' => $model_name,
@@ -53,6 +54,7 @@ trait Lists
     protected function addListAction(array $params)
     {
         $this->list_actions[] = $params;
+
         return $this;
     }
 }

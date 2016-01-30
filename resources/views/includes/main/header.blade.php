@@ -1,9 +1,9 @@
 <header class="navbar-fixed">
     <nav>
         <div class="nav-wrapper">
-            <a href="/" class="brand-logo center">在那邊</a>
+            <a href="/" class="brand-logo center">小布與噗噗</a>
             <a href="#" data-activates="mobile-nav" class="button-collapse">
-                <i class="mdi-navigation-menu"></i>
+                <i class="material-icons">menu</i>
             </a>
             <ul class="left hide-on-med-and-down">
                 <li>

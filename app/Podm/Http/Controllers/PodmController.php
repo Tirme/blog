@@ -1,40 +1,34 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Podm\Http\Controllers;
 
-use App\Podm\Register as PodmRegister;
+use Podm;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Podm\UploadPhotoRequest;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
-use Podm;
 
 class PodmController extends Controller
 {
-    public function listPage($model_name, $per_page = 10)
+    public function listPage(Request $request, $model_name, $per_page = 10)
     {
         $model = Podm::getModel($model_name);
         if ($model !== null) {
-            // $models = PodmRegister::getModels();
-            // foreach ($models as $model) {
-                // dd($model);
-            // }
-            return view('PodmView::admin', [
-                // 'models' => Podm::getModels(),
-                'menu' => Podm::getMenu(),
-                'content' => $model->getList($per_page),
+            return view('PodmView::list', [
+                'content' => $model->getListHtml($per_page),
             ]);
         } else {
             return redirect('/');
         }
     }
-    public function create($model_name)
+
+    public function createPage($model_name)
     {
         $model = Podm::getModel($model_name);
         if ($model) {
             $user_values = old();
 
-            return view('PodmView::admin', [
-                'menu' => Podm::getMenu(),
+            return view('PodmView::create_form', [
                 'content' => $model->getCreateForm($user_values),
                 'errors' => session('errors', []),
             ]);
@@ -42,6 +36,7 @@ class PodmController extends Controller
             return redirect('/');
         }
     }
+
     public function store(Request $request)
     {
         $hash = $request->input('_hash', '');
@@ -56,24 +51,24 @@ class PodmController extends Controller
                 if ($model->hasError()) {
                     if ($error_redirect !== null) {
                         return redirect($error_redirect)
-                            ->with('errors', $model->getErrors()->getMessages())
-                            ->withInput();
+                                        ->with('errors', $model->getErrors()->getMessages())
+                                        ->withInput();
                     } else {
                         return redirect()
-                            ->route('model_create', [
-                                'model_name' => $model_name,
-                            ])
-                            ->with('errors', $model->getErrors()->getMessages())
-                            ->withInput();
+                                        ->route('model_create', [
+                                            'model_name' => $model_name,
+                                        ])
+                                        ->with('errors', $model->getErrors()->getMessages())
+                                        ->withInput();
                     }
                 } else {
                     if ($success_redirect !== null) {
                         return redirect($success_redirect);
                     } else {
                         return redirect()
-                            ->route('model_list', [
-                                'model_name' => $model->getName(),
-                            ]);
+                                        ->route('model_list', [
+                                            'model_name' => $model->getName(),
+                        ]);
                     }
                 }
             } else {
@@ -83,22 +78,23 @@ class PodmController extends Controller
             return redirect('/');
         }
     }
-    public function edit($model_name, $id)
+
+    public function editPage($model_name, $id)
     {
         $model_name = snake_case($model_name);
         $model = Podm::getModelById($model_name, $id);
         if ($model !== null) {
             $user_values = old();
 
-            return view('PodmView::admin', [
+            return view('PodmView::edit_form', [
                 'content' => $model->getEditForm($user_values),
-                'menu' => Podm::getMenu(),
                 'errors' => session('errors', []),
             ]);
         } else {
             return redirect('/');
         }
     }
+
     public function update(Request $request)
     {
         $hash = $request->get('_hash', '');
@@ -112,27 +108,28 @@ class PodmController extends Controller
                 $model->update($user_values);
                 if ($model->hasError()) {
                     return redirect()
-                        ->route('model_edit', [
-                            'model_name' => $model_name,
-                            'id' => $id,
-                        ])
-                        ->with('errors', $model->getErrors()->getMessages())
-                        ->withInput();
+                                    ->route('model_edit', [
+                                        'model_name' => $model_name,
+                                        'id' => $id,
+                                    ])
+                                    ->with('errors', $model->getErrors()->getMessages())
+                                    ->withInput();
                 } else {
                     return redirect()
-                        ->route('model_list', [
-                            'model_name' => $model_name,
-                        ]);
+                                    ->route('model_list', [
+                                        'model_name' => $model_name,
+                    ]);
                 }
             } else {
                 return redirect()->route('model_list', [
-                    'model_name' => $model_name,
+                            'model_name' => $model_name,
                 ]);
             }
         } else {
             return redirect('/');
         }
     }
+
     public function uploadPhoto(UploadPhotoRequest $request)
     {
         $result = [
@@ -150,7 +147,7 @@ class PodmController extends Controller
                     $photo_file = $photo->getPath().'/'.$photo->getFilename();
                     $mine_type = mime_content_type($photo_file);
                     $image = Image
-                        ::make($photo_file);
+                            ::make($photo_file);
                     $image->resize(300, 200, function ($constraint) {
                         $constraint->aspectRatio();
                     });
@@ -160,7 +157,7 @@ class PodmController extends Controller
                         'id' => $photo_id,
                         'mine_type' => $mine_type,
                         'base64' => $base64,
-                        'file_name' => $photo->getClientOriginalName()
+                        'file_name' => $photo->getClientOriginalName(),
                     ];
                 }
             }

@@ -3,6 +3,9 @@ var concat = require('gulp-concat');
 var sass = require('gulp-sass');
 var del = require('del');
 
+var path = {
+    sass: 'resources/assets/sass/*.scss'
+};
 var components = [
     'jquery/dist/jquery.min.js',
     'Materialize/dist/js/materialize.min.js',
@@ -20,8 +23,8 @@ gulp.task('components', function() {
         .pipe(gulp.dest('public/builds/js'));
 });
 
-gulp.task('sass', function () {
-    gulp.src('resources/assets/sass/*.scss')
+gulp.task('sass', function() {
+    gulp.src(path.sass)
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('public/builds/css'));
 });
@@ -34,7 +37,7 @@ gulp.task('fonts', function() {
 });
 
 gulp.task('watch', function() {
-
+    gulp.watch(path.sass, ['sass']);
 });
 
 gulp.task('default', ['watch', 'components', 'sass', 'fonts']);

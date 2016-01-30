@@ -32,11 +32,12 @@ class Photo extends Model
             'column' => 'Photos',
             'rules' => ['required'],
         ]);
-        $this->add('album_id', $album);
-        $this->add('photos', $photos);
-        $this->setFormAttributes([
-            'class' => 'PhotoForm',
-        ]);
+        $this->add('album_id', $album)
+            ->add('photos', $photos)
+            ->setFormAttributes([
+                'class' => 'PhotoForm',
+            ]
+        );
     }
     public function store($data)
     {

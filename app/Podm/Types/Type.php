@@ -135,6 +135,12 @@ abstract class Type
     {
         return $this->rules;
     }
+    public function preStore($value) {
+        return $value;
+    }
+    public function preUpdate($value) {
+        return $value;
+    }
     public function __get($name)
     {
         $key = $name;

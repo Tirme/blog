@@ -2,17 +2,17 @@
 
 namespace App\Podm;
 
-use App\Podm\Types\Type as Type;
-use App\Podm\Form\Form as Form;
-use App\Podm\Lists\Lists as Lists;
-use App\Podm\Traits\TraitData as Data;
+use App\Podm\Traits\TraitList as PodmList;
+use App\Podm\Types\Type as PodmType;
+use App\Podm\Traits\TraitForm as PodmForm;
+use App\Podm\Traits\TraitData as PodmData;
 use Illuminate\Support\MessageBag as MessageBag;
 
 class Model
 {
-    use Lists,
-        Form,
-        Data;
+    use PodmList,
+        PodmForm,
+        PodmData;
     protected $name = '';
     protected $admin_name = '';
     protected $admin_description = '';
@@ -27,7 +27,7 @@ class Model
         $class_name = class_basename(get_class($this));
         $this->name = strtolower(snake_case($class_name));
         $this->errors = new MessageBag();
-        if (!empty($data)) {
+        if (! empty($data)) {
             foreach ($data as $key => $value) {
                 if (isset($this->fields[$key])) {
                     $this->fields[$key]->setValue($value);
@@ -41,10 +41,15 @@ class Model
     protected function register()
     {
     }
-    protected function add($key, Type $type)
+    protected function add($key, PodmType $type)
     {
         $this->fields[$key] = $type;
+
         return $this;
+    }
+    public function getFields()
+    {
+        return $this->fields;
     }
     public function getName()
     {
@@ -78,7 +83,7 @@ class Model
     }
     public function hasError()
     {
-        return !$this->errors->isEmpty();
+        return ! $this->errors->isEmpty();
     }
     public function __get($key)
     {

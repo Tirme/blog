@@ -16,8 +16,7 @@
             </div>
             <div class="col m2 l2">&nbsp;</div>
         </div>
-        <div class="divider"></div>
-        <div class="section">
+        <div>
             @yield('content')
         </did>
         @include('includes.main.footer')

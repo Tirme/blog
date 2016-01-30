@@ -16,7 +16,7 @@ class AlbumRepository extends Repository
     public function getRows($rows = 10)
     {
         $collection = AlbumModel
-            ::with('cover')
+            ::with('cover', 'photos')
             ->where('available', '0')
             ->take($rows)
             ->get();

@@ -10,8 +10,9 @@ class IndexController extends Controller
     {
         $albums = with(RepositoryFactory::create('Gallery\Album'))
             ->getRows(10);
+
         return view('home', [
-            'albums' => $albums
+            'albums' => $albums,
         ]);
     }
 }

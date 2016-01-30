@@ -50,7 +50,7 @@ class Album extends Model
                 'class' => 'AlbumForm',
             ])
             ->addListAction([
-                'class' => 'glyphicon glyphicon-picture',
+                'class' => 'image',
                 'link' => function ($row) {
                     return route('admin_gallery_album_photo_list', [
                         'album_id' => $row->_id,
@@ -59,7 +59,7 @@ class Album extends Model
                 'title' => 'Photos',
             ])
             ->addListAction([
-                'class' => 'glyphicon glyphicon-plus',
+                'class' => 'add_to_photos',
                 'link' => function ($row) {
                     return route('admin_gallery_album_photo_form', [
                         'album_id' => $row->_id,
@@ -68,7 +68,7 @@ class Album extends Model
                 'title' => 'Add Photo',
             ])
             ->addListAction([
-                'class' => 'glyphicon glyphicon-import',
+                'class' => 'collections',
                 'link' => function ($row) {
                     return route('admin_gallery_album_photo_import_form', [
                         'date' => $row->date->value,

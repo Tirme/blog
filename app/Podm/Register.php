@@ -9,6 +9,7 @@ class Register
     protected $models = [];
     public function __construct()
     {
+        $this->register(\App\Podm\AdminUser::class, 'admin_user');
         $this->register(\App\Podm\Article::class, 'article');
         $this->register(\App\Podm\Topic::class, 'topic');
         $this->register(\App\Podm\Album::class, 'album');

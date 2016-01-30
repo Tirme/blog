@@ -5,5 +5,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/vue-strap/1.0.3/vue-strap.min.js"></script>
 <script src="/js/podm.js"></script>
 <script type="text/javascript">
-    @stack('fields-scripts')
+    @stack('podm-scripts')
+    
+    $('.modal-trigger').leanModal();
 </script>

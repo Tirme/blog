@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Podm\Form;
+namespace App\Podm\Traits;
 
 use Validator;
 use Podm;
 use RepositoryFactory;
 
-trait Form
+trait TraitForm
 {
     protected $form_attributes = [
         'class' => '',
@@ -34,7 +34,7 @@ trait Form
         $hash = Podm::cryptHash([
             'model_name' => $model_name,
         ]);
-        $form = view('PodmView::create_form', [
+        $form = view('PodmView::model.create_form', [
             'attributes' => $this->form_attributes,
             'rows' => $rows,
             'hash' => $hash,
@@ -68,7 +68,7 @@ trait Form
             '_id' => $this->_id,
             'model_name' => $model_name,
         ]);
-        $form = view('PodmView::edit_form', [
+        $form = view('PodmView::model.edit_form', [
             'attributes' => $this->form_attributes,
             'rows' => $rows,
             'hash' => $hash,
@@ -99,6 +99,7 @@ trait Form
     public function store($data)
     {
         $result = false;
+        $rules = $this->getRules();
         $validator = Validator::make($data, $this->getRules());
         if ($validator->fails()) {
             $this->setErrors($validator->errors());
@@ -106,7 +107,7 @@ trait Form
             $values = [];
             foreach ($this->fields as $name => $field) {
                 if (isset($data[$name])) {
-                    $values[$name] = $data[$name];
+                    $values[$name] = $field->preStore($data[$name]);
                 }
             }
             $repository = RepositoryFactory::create('Podm\Podm');
@@ -125,7 +126,7 @@ trait Form
             $values = [];
             foreach ($this->fields as $name => $field) {
                 if (isset($data[$name]) && $field->isEditable()) {
-                    $values[$name] = $data[$name];
+                    $values[$name] = $field->preUpdate($data[$name]);
                 }
             }
             $repository = RepositoryFactory::create('Podm\Podm');

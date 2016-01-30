@@ -31,7 +31,6 @@ class AlbumController extends Controller
         ];
         // @todo 只留一層view
         return view('PodmView::admin', [
-            'menu' => Podm::getMenu(),
             'content' => view('gallery.photo.admin.list', [
                 'album' => $album,
                 'albums' => $albums,
@@ -111,7 +110,6 @@ class AlbumController extends Controller
         // ];
         //
         // return view('FieldsView::fields', [
-        //     'menu' => Field::getMenu(),
         //     'content' => view('gallery.photo.admin.form', [
         //         'form' => $form,
         //         'errors' => session('errors', []),
@@ -167,7 +165,6 @@ class AlbumController extends Controller
         ];
         // @todo 調整成只做一層view
         return view('PodmView::admin', [
-            'menu' => Podm::getMenu(),
             'content' => view('gallery.photo.admin.import', [
                 'form' => $form,
                 'errors' => session('errors', null),

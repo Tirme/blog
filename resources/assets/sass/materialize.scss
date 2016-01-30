@@ -1,3 +1,62 @@
 $primary-color: rgb(155, 223, 222);
 $primary-color-lighter: lighten($primary-color, 30%);
 @import '../../../bower_components/Materialize/sass/materialize.scss';
+
+body {
+    background: #EEFFEE;
+}
+nav,
+nav .nav-wrapper i,
+nav a.button-collapse,
+nav a.button-collapse i {
+    height: 50px;
+    line-height: 50px;
+}
+nav .nav-wrapper .menu-collapse i {
+    margin-left: 15px;
+}
+nav .brand-logo {
+    font-size: 1.8rem;
+}
+.card {
+    background: #FAFAEE;
+}
+.card .card-image .card-title {
+    font-size: 18px;
+    margin: 0 0 10px 10px;
+    background: color('red', 'lighten-4');
+    padding: 0 15px;
+}
+.card .card-image .photos-count {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    color: rgb(255, 255, 255);
+    background: $primary-color;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+table.highlight > tbody > tr:hover {
+    background: $primary-color;
+}
+#toast-container {
+    display:block;
+    position: fixed;
+    z-index: 10000;
+    @media #{$small-and-down} {
+        min-width: 100%;
+        bottom: 0%;
+    }
+    @media #{$medium-only} {
+        left: 5%;
+        bottom: 7%;
+        max-width: 90%;
+    }
+    @media #{$large-and-up} {
+        top: 10%;
+        right: 30%;
+        max-width: 86%;
+    }
+}

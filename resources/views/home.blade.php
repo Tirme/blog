@@ -18,6 +18,7 @@
                                 ]) }}">
                             @endif
                             <span class="card-title">{{ $album->name }}</span>
+                            <span class="photos-count circle hoverable">{{ $album->photos->count() }}</span>
                         </a>
                     </div>
                     <div class="card-content">
