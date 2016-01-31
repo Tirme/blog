@@ -17,7 +17,7 @@
                     ]) }}" />
                 </div>
                 <div class="form-group">
-                    <select class="form-control" name="photos[{{ $photo->getId() }}][album_id]">
+                    <select class="browser-default" name="photos[{{ $photo->getId() }}][album_id]">
                         <option value="">移出相簿</option>
                         @foreach ($albums as $album)
                             <option value="{{ $album->getId() }}"

@@ -9,7 +9,8 @@ var path = {
 var components = [
     'jquery/dist/jquery.min.js',
     'Materialize/dist/js/materialize.min.js',
-    'vue/dist/vue.min.js'
+    'vue/dist/vue.min.js',
+    'marked/marked.min.js'
 ];
 
 gulp.task('components', function() {

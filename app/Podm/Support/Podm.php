@@ -8,6 +8,7 @@ use App\Podm\Storage\Storage as PodmStorage;
 use App\Podm\Labels\Label as PodmLabel;
 use App\Podm\Exceptions\TypeException;
 use App\Podm\Exceptions\RegisterException;
+use App\Podm\Exceptions\EloquentException;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Crypt;
 use RepositoryFactory;
@@ -42,7 +43,9 @@ class Podm {
         if (isset($this->models[$model_name])) {
             $model = new $this->models[$model_name]($data);
         } else {
-            throw new PodmEloquentException('Model[%s(%s)] not exists');
+            throw new EloquentException(
+            sprintf('Model[%s] not exists', $model_name)
+            );
         }
 
         return $model;
@@ -59,7 +62,7 @@ class Podm {
                 $model = new $models[$model_name]($row->toArray());
             }
         } else {
-            throw new PodmEloquentException(
+            throw new EloquentException(
             sprintf('Model[%s] not exists', $model_name)
             );
         }
@@ -71,12 +74,14 @@ class Podm {
         $menu_links = [];
         $models = $this->getModels();
         foreach ($models as $model_name => $model) {
-            $menu_links[] = [
-                'link' => route('model_list', [
-                    'model_name' => $model_name
-                ]),
-                'text' => class_basename($model)
-            ];
+            if ($model::$menu_available) {
+                $menu_links[] = [
+                    'link' => route('model_list', [
+                        'model_name' => $model_name
+                    ]),
+                    'text' => class_basename($model)
+                ];
+            }
         }
         return $menu_links;
     }

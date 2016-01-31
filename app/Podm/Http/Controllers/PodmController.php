@@ -10,11 +10,18 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class PodmController extends Controller
 {
+    public function test()
+    {
+        return view('PodmView::test', [
+            'content' => 'ok'
+        ]);
+    }
     public function listPage(Request $request, $model_name, $per_page = 10)
     {
         $model = Podm::getModel($model_name);
         if ($model !== null) {
             return view('PodmView::list', [
+                'model_name' => $model_name,
                 'content' => $model->getListHtml($per_page),
             ]);
         } else {

@@ -18,7 +18,8 @@
 14. 管理介面預設網址[2]
 
 @todo
-model註冊改在config, 實際註冊時改讀config [1]
+PodmType -> Markdown
+PodmType -> DatePicker
 
 @bugs
 

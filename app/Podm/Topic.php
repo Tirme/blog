@@ -11,8 +11,7 @@ class Topic extends Model
     protected function register()
     {
         $name = Podm::type('plan_text', [
-            'label' => 'Name',
-            'placeholder' => 'Subject',
+            'label' => 'Topic Name',
             'index' => true,
             'rules' => ['required'],
         ]);

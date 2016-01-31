@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="input-field col s12 m6 l4">
+    <div class="input-field col s12 m6 l6">
         <input
             type="password"
             id="{{ $name }}"
@@ -11,7 +11,7 @@
             />
         <label for="{{ $name }}">{{ $label }}</label>
     </div>
-    <div class="input-field col s12 m6 l4">
+    <div class="input-field col s12 m6 l6">
         <input
             type="password"
             id="{{ $name }}-confirmation"

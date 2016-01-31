@@ -1,23 +1,30 @@
 @define $id = uniqid()
-<label class="control-label">{{ $label }}</label>
-<div id="markdown-{{ $id }}" class="markdown-editor">
-    <tabs>
-        <tab header="Editor">
-            <textarea
-                class="form-control"
-                name="{{ $name }}"
-                placeholder="{{ $placeholder }}"
-                rows="{{ $rows }}"
-                v-model="input_{{ $id }}"
-                debounce="300"
-                {{ $required }}
-                {{ $editable }}
+<div id="markdown-{{ $id }}" class="row markdown-editor">
+    <div class="col s6">
+        <ul class="tabs">
+            <li class="tab col s6">
+                <a href="#markdown-editor">Editor</a>
+            </li>
+            <li class="tab col s6">
+                <a href="#markdown-preview">Preview</a>
+            </li>
+        </ul>
+    </div>
+    <div id="markdown-editor" class="col s12">
+        <textarea
+            class="col s12 materialize-textarea"
+            name="{{ $name }}"
+            placeholder="{{ $placeholder }}"
+            rows="{{ $rows }}"
+            v-model="input_{{ $id }}"
+            debounce="300"
+            {{ $required }}
+            {{ $editable }}
             >{{ $value }}</textarea>
-        </tab>
-        <tab header="Preview">
-            <div class="markdown-preview" v-html="input_{{ $id }} | marked"></div>
-        </tab>
-    </tabs>
+    </div>
+    <div id="markdown-preview" class="col s12">
+        <div class="markdown-preview" v-html="input_{{ $id }} | marked"></div>
+    </div>
 </div>
 @push('podm-scripts')
     new Vue({
@@ -27,10 +34,6 @@
         },
         filters: {
             marked: marked
-        },
-        components: {
-            tabs: tabs,
-            tab: tab
         }
     });
 @endpush

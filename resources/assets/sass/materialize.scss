@@ -60,3 +60,57 @@ table.highlight > tbody > tr:hover {
         max-width: 86%;
     }
 }
+.dropdown-content li:hover,
+.dropdown-content li.active {
+    background-color: $primary-color;
+}
+.dropdown-content li.selected,
+.dropdown-content li.active.selected {
+    font-weight: bold;
+    background: transparent;
+}
+
+.podm-list > section {
+    @media #{$medium-and-up} {
+        margin-top: 50px;
+    }
+}
+.list-action-btn {
+    @media #{$small-and-down} {
+        bottom: 5px;
+    }
+    @media #{$medium-and-up} {
+        top: 60px;
+        bottom: auto;
+        right: 50px;
+    }
+}
+$markdown-editor-tabs-height: 40px;
+.markdown-editor ul.tabs {
+    height: $markdown-editor-tabs-height;
+    background: transparent;
+}
+.markdown-editor ul.tabs .tab {
+    height: $markdown-editor-tabs-height;
+    line-height: $markdown-editor-tabs-height;
+}
+.markdown-editor ul.tabs .tab a.active,
+.markdown-editor ul.tabs .tab a:hover {
+    color: color('teal', 'darken-3');
+}
+.markdown-editor ul.tabs .indicator {
+    background-color: color('teal', 'darken-3');
+}
+.markdown-editor textarea.materialize-textarea {
+    padding: 10px;
+    margin: 0;
+    border: 1px solid color('teal', 'darken-3');
+}
+.markdown-editor #markdown-preview > div {
+    min-height: 50px;
+    padding: 10px;
+    border: 1px solid color('teal', 'darken-3');
+}
+.markdown-editor #markdown-preview > div p {
+    margin: 0 0 22px 0;
+}

@@ -1,16 +1,17 @@
-var tabs = VueStrap.tabset;
-var tab = VueStrap.tab;
-var modal = VueStrap.modal;
-var progressbar = VueStrap.progressbar;
-
 $('header .menu-collapse').sideNav();
+$('select').material_select();
+$('ul.tabs').tabs();
+$('.datepicker').pickadate({
+    selectMonths: true,
+    selectYears: 15
+});
 
 (function($) {
     $(document).ready(function() {
-        $.datepicker.formatDate('yy-mm-dd');
-        $('[type="date"]').datepicker({
-            dateFormat: 'yy-mm-dd'
-        });
+//        $.datepicker.formatDate('yy-mm-dd');
+//        $('[type="date"]').datepicker({
+//            dateFormat: 'yy-mm-dd'
+//        });
         $('[type="file"]').change(function(event) {
             var files = event.target.files;
             var model_name = $(this).attr('model_name');
@@ -36,13 +37,13 @@ $('header .menu-collapse').sideNav();
                 $.each(photos, function(key, photo) {
                     var index = $('li', preview).size() + 1;
                     preview.append(
-                        '<li>' +
-                        '<img src="data:image/' + photo.mine_type + ';base64,' + photo.base64 + '" />' +
-                        '<input type="hidden" name="photos[' + index + '][id]" value="' + photo.id + '" />' +
-                        '<input type="hidden" name="photos[' + index + '][file_name]" value="' + photo.file_name + '" />' +
-                        '<textarea name="photos[' + index + '][summary]"> </textarea>' +
-                        '</li>'
-                    );
+                            '<li>' +
+                            '<img src="data:image/' + photo.mine_type + ';base64,' + photo.base64 + '" />' +
+                            '<input type="hidden" name="photos[' + index + '][id]" value="' + photo.id + '" />' +
+                            '<input type="hidden" name="photos[' + index + '][file_name]" value="' + photo.file_name + '" />' +
+                            '<textarea name="photos[' + index + '][summary]"> </textarea>' +
+                            '</li>'
+                            );
                 });
             }).error(function(result) {
 

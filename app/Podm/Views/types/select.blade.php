@@ -1,10 +1,12 @@
-<label class="control-label">{{ $label }}</label>
-<select name="{{ $name }}" class="form-control">
-    @foreach ($options as $value => $text)
+<div class="input-field col s12">
+    <select name="{{ $name }}">
+        @foreach ($options as $value => $text)
         @if ($value == $selected_value)
-            <option value="{{ $value }}" selected="selected">{{ $text }}</option>
+        <option value="{{ $value }}" selected="selected">{{ $text }}</option>
         @else
-            <option value="{{ $value }}" >{{ $text }}</option>
+        <option value="{{ $value }}" >{{ $text }}</option>
         @endif
-    @endforeach
-</select>
+        @endforeach
+    </select>
+    <label>{{ $label }}</label>
+</div>

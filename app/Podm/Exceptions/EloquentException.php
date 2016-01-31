@@ -4,6 +4,6 @@ namespace App\Podm\Exceptions;
 
 use Exception;
 
-class PodmEloquentException extends Exception
+class EloquentException extends Exception
 {
 }
