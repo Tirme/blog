@@ -1,72 +1,71 @@
-<h1>相簿管理 - 批次處理</h1>
-<hr />
+<h5>相簿管理 - 批次處理</h5>
 @if ($errors !== null)
-    @foreach ($errors->toArray() as $type => $messages)
-        @foreach ($messages as $message)
-            <div class="alert alert-danger">{{ $message }}</div>
-        @endforeach
-    @endforeach
+@foreach ($errors->toArray() as $type => $messages)
+@foreach ($messages as $message)
+<div class="alert alert-danger">{{ $message }}</div>
+@endforeach
+@endforeach
 @endif
 <form id="photos-import" class="photos-import" method="post" action="{{ $form->action }}">
     {!! $form->album->getFormHtml() !!}
-    <ul class="photos clearfix">
+    <div class="row">
         @foreach ($photos as $photo)
-            <li>
-                <div class="{{ $photo['direction'] }}">
+        <div class="col s12 m4">
+            <div class="card small hoverable">
+                <div class="card-image">
+                    <img
+                        src="{{ route('admin_gallery_album_photo_import_display', [
+                            'photo_id' => $photo->getId(),
+                            'size' => 'small'
+                        ]) }}"
+                        class="materialboxed"
+                        title="{{ $photo->file_name }}"
+                        data-caption="{{ $photo->date }}"
+                        />
+                </div>
+                <div class="card-content">
                     <div>
                         <input type="checkbox" id="bypass-{{ $photo->getId() }}" name="photos[{{ $photo->getId() }}][import]" value="1" />
                         <label for="bypass-{{ $photo->getId() }}">上傳</label>
                     </div>
-                    <h5>{{ $photo['date'] }} F{{ $photo['f_number'] }}</h5>
-                    <img src="{{ route('admin_gallery_album_photo_import_display', [
-                        'photo_id' => $photo->getId(),
-                        'size' => 'small'
-                    ]) }}" @click="open('{{ $photo->getId() }}')" />
+                    <div class="right-align">
+                        <span>拍攝日期：{{ $photo->date }}</span>
+                    </div>
                 </div>
-                <input type="hidden" name="date" value="{{ $date }}" />
-            </li>
+            </div>
+        </div>
         @endforeach
-    </ul>
-    <hr />
-    <div class="clearfix">
-        {!! $photos->render() !!}
-        <button type="submit" class="btn btn-primary pull-right">Save</button>
     </div>
-    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-    <modal :show.sync="show_modal" title="Photo" effect="fade" width="990" class="vuestrap-bug-photo-import-modal">
-        <div slot="modal-body" class="modal-body">
-            <img src="@{{ photo }}" class="center-block" v-show="show_photo" v-on:load="photoLoaded"/>
-            <progressbar :now="100" v-show="show_progressbar" type="primary" striped label animated></progressbar>
+    <div class="section row">
+        <div class="col s12 l12">
+            <ul class="pagination right-align">
+                @if ($photos->currentPage() > 1)
+                <li class="waves-effect">
+                    <a href="{{ $photos->previousPageUrl() }}">
+                        <i class="material-icons">chevron_left</i>
+                    </a>
+                </li>
+                @endif
+                @for ($page = 1; $page <= $photos->lastPage(); $page++)
+                    @if ($photos->currentPage() === $page)
+                        <li class="active"><a href="{{ $photos->url($page) }}">{{ $page }}</a></li>
+                    @else
+                        <li class="waves-effect"><a href="{{ $photos->url($page) }}">{{ $page }}</a></li>
+                    @endif
+                @endfor
+                @if ($photos->currentPage() !== $photos->lastPage())
+                <li class="waves-effect">
+                    <a href="{{ $photos->nextPageUrl() }}">
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </li>
+                @endif
+            </ul>
         </div>
-        <div slot="modal-footer" class="modal-footer">
-            <button type="button" class="btn btn-default" @click='show_modal = false'>Close</button>
+        <div class="center-align">
+            <input type="hidden" name="date" value="{{ $date }}" />
+            <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+            <button type="submit" class="btn btn-primary pull-right">Save</button>
         </div>
-    </modal>
+    </div>
 </form>
-@push('fields-scripts')
-    new Vue({
-        el: '#photos-import',
-        data: {
-            show_modal: false,
-            photo: '',
-            show_photo: false,
-            show_progressbar: false
-        },
-        methods: {
-            open: function(photo_id) {
-                this.photo = '/admin/gallery/photo/import/display/' + photo_id + '/size/medium';
-                this.show_photo = false;
-                this.show_progressbar = true;
-                this.show_modal = true;
-            },
-            photoLoaded: function() {
-                this.show_photo = true;
-                this.show_progressbar = false;
-            }
-        },
-        components: {
-            modal: modal,
-            progressbar: progressbar
-        }
-    });
-@endpush

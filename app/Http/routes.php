@@ -3,7 +3,7 @@
 /*
 
 @tasks
-1. 調整後台介面，改用Materialize [1]
+1. form error message [1]
 2. 選擇相簿的首圖、相簿改撈設定的首圖 [1]
 3. Exif資訊改由exif欄位統一來源 [3]
 4. 移除Exif外的其他Exif欄位(with taske 3) [3]
@@ -18,8 +18,12 @@
 14. 管理介面預設網址[2]
 
 @todo
-PodmType -> Markdown
-PodmType -> DatePicker
+ * photos view layout
+ * task 2
+ * task 1
+ * task 8
+ * task 14
+ * task 13
 
 @bugs
 
