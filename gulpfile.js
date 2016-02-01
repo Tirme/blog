@@ -8,7 +8,7 @@ var path = {
 };
 var components = [
     'jquery/dist/jquery.min.js',
-    'Materialize/dist/js/materialize.min.js',
+    'Materialize/bin/materialize.js',
     'vue/dist/vue.min.js',
     'marked/marked.min.js'
 ];

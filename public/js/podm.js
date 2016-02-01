@@ -1,17 +1,13 @@
-$('header .menu-collapse').sideNav();
-$('select').material_select();
-$('ul.tabs').tabs();
-$('.datepicker').pickadate({
-    selectMonths: true,
-    selectYears: 15
-});
-
 (function($) {
     $(document).ready(function() {
-//        $.datepicker.formatDate('yy-mm-dd');
-//        $('[type="date"]').datepicker({
-//            dateFormat: 'yy-mm-dd'
-//        });
+        $('header .menu-collapse').sideNav();
+        $('select').material_select();
+        $('ul.tabs').tabs();
+        $('.datepicker').pickadate({
+            selectMonths: true,
+            selectYears: 15
+        });
+
         $('[type="file"]').change(function(event) {
             var files = event.target.files;
             var model_name = $(this).attr('model_name');

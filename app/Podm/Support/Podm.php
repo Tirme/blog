@@ -2,7 +2,6 @@
 
 namespace App\Podm\Support;
 
-use App\Podm\Register as PodmRegister;
 use App\Podm\Model as Model;
 use App\Podm\Storage\Storage as PodmStorage;
 use App\Podm\Labels\Label as PodmLabel;
@@ -13,15 +12,15 @@ use Illuminate\Contracts\Encryption\DecryptException;
 use Crypt;
 use RepositoryFactory;
 
-class Podm {
-
+class Podm
+{
     protected $models = [];
-
-    public function __construct() {
+    public function __construct()
+    {
         static::register();
     }
-
-    protected function register() {
+    protected function register()
+    {
         $models = config('podm.models', []);
         foreach ($models as $model) {
             list($class, $alias) = $model;
@@ -32,12 +31,12 @@ class Podm {
             }
         }
     }
-
-    public function getModels() {
+    public function getModels()
+    {
         return $this->models;
     }
-
-    public function getModel($name, array $data = []) {
+    public function getModel($name, array $data = [])
+    {
         $model = null;
         $model_name = snake_case($name);
         if (isset($this->models[$model_name])) {
@@ -50,8 +49,8 @@ class Podm {
 
         return $model;
     }
-
-    public function getModelById($name, $id) {
+    public function getModelById($name, $id)
+    {
         $model = null;
         $model_name = snake_case($name);
         $models = self::getModels();
@@ -69,47 +68,48 @@ class Podm {
 
         return $model;
     }
-
-    public function getMenuLinks() {
+    public function getMenuLinks()
+    {
         $menu_links = [];
         $models = $this->getModels();
         foreach ($models as $model_name => $model) {
             if ($model::$menu_available) {
                 $menu_links[] = [
                     'link' => route('model_list', [
-                        'model_name' => $model_name
+                        'model_name' => $model_name,
                     ]),
-                    'text' => class_basename($model)
+                    'text' => class_basename($model),
                 ];
             }
         }
+
         return $menu_links;
     }
-
-    public function label($label = null) {
+    public function label($label = null)
+    {
         return new PodmLabel($label);
     }
-
-    public function type($type = 'text', array $params = []) {
-        $class_name = '\\App\\Podm\\Types\\' . studly_case($type);
+    public function type($type = 'text', array $params = [])
+    {
+        $class_name = '\\App\\Podm\\Types\\'.studly_case($type);
         if (class_exists($class_name)) {
             return new $class_name($params);
         } else {
             throw new TypeException(sprintf('Field type[%s] not found', $type));
         }
     }
-
-    public function storage($name) {
+    public function storage($name)
+    {
         return new PodmStorage($name);
     }
-
-    public function cryptHash(array $data) {
+    public function cryptHash(array $data)
+    {
         $string = serialize($data);
 
         return Crypt::encrypt($string);
     }
-
-    public function decryptHash($hash) {
+    public function decryptHash($hash)
+    {
         try {
             $decrypted = Crypt::decrypt($hash);
 
@@ -118,8 +118,8 @@ class Podm {
             return false;
         }
     }
-
-    public function listLink($link, $row) {
+    public function listLink($link, $row)
+    {
         $result = '';
         if (is_string($link)) {
             $result = $link;
@@ -129,5 +129,13 @@ class Podm {
 
         return $result;
     }
+    protected static $uniqid = null;
+    public function uniqid($new = false)
+    {
+        if ($new) {
+            static::$uniqid = uniqid();
+        }
 
+        return static::$uniqid;
+    }
 }

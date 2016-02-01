@@ -1,5 +1,4 @@
-@define $id = uniqid()
-<div id="markdown-{{ $id }}" class="row markdown-editor">
+<div id="markdown-{{ Podm::uniqid(true) }}" class="row markdown-editor">
     <div class="col s6">
         <ul class="tabs">
             <li class="tab col s6">
@@ -16,21 +15,21 @@
             name="{{ $name }}"
             placeholder="{{ $placeholder }}"
             rows="{{ $rows }}"
-            v-model="input_{{ $id }}"
+            v-model="input_{{ Podm::uniqid() }}"
             debounce="300"
             {{ $required }}
             {{ $editable }}
             >{{ $value }}</textarea>
     </div>
     <div id="markdown-preview" class="col s12">
-        <div class="markdown-preview" v-html="input_{{ $id }} | marked"></div>
+        <div class="markdown-preview" v-html="input_{{ Podm::uniqid() }} | marked"></div>
     </div>
 </div>
 @push('podm-scripts')
     new Vue({
-        el: '#markdown-{{ $id }}',
+        el: '#markdown-{{ Podm::uniqid() }}',
         data: {
-            'input_{{ $id }}': ''
+            'input_{{ Podm::uniqid() }}': ''
         },
         filters: {
             marked: marked
